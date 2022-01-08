@@ -26,11 +26,7 @@ connect.then((db) => {
 
 var app = express();
 
-app.use(express.static(path.join(__dirname, 'client','build')));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
 
 // app.all('*', (req,res,next) => {
 //   if(req.secure) {
@@ -63,6 +59,11 @@ app.use('/sell',sellRouter);
 app.use('/market',marketRouter);
 app.use('/purchased', purchasedRouter);
 
+app.use(express.static(path.join(__dirname, 'client','build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 // Serve static assets if in production
 // if (process.env.NODE_ENV === 'production') {
 //   // Set static folder
