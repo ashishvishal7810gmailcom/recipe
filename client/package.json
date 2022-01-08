@@ -1,0 +1,82 @@
+{
+  "name": "olxclone",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@popperjs/core": "^2.10.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "autosuggest-highlight": "^3.2.0",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.0",
+    "bootstrap-social": "5.1.1",
+    "classnames": "^2.3.1",
+    "cross-fetch": "^3.1.4",
+    "draft-convert": "^2.1.12",
+    "draft-js": "^0.11.7",
+    "emoji-picker-react": "^3.4.8",
+    "font-awesome": "4.7.0",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "multiselect-react-dropdown": "^2.0.16",
+    "popper.js": "^1.16.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-autobind": "^1.0.6",
+    "react-autosuggest": "^10.1.0",
+    "react-avatar": "^4.0.0",
+    "react-bootstrap": "^2.0.3",
+    "react-chat-elements": "^0.9.0",
+    "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
+    "react-html-attributes": "^1.4.6",
+    "react-icons": "^4.3.1",
+    "react-popper": "^2.2.5",
+    "react-redux": "^7.2.5",
+    "react-redux-form": "^1.16.14",
+    "react-router-dom": "4.2.2",
+    "react-scripts": "^5.0.0",
+    "react-select": "^5.2.1",
+    "react-social-login": "^3.4.14",
+    "react-social-login-buttons": "^3.6.0",
+    "react-transition-group": "^4.4.2",
+    "reactjs-social-login": "^1.5.2",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.1.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "socket.io": "^4.4.0",
+    "socket.io-client": "^4.4.0",
+    "styled-components": "^5.3.3",
+    "suneditor": "^2.41.3",
+    "suneditor-react": "^3.3.1",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "PORT=3001 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
