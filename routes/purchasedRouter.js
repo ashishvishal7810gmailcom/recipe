@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const authenticate = require('../authenticate');
 const multer = require('multer');
 const cors = require('./cors');
-var User = require('../models/user');
+const User = require('../models/user');
 const Course = require('../models/course');
 const Topic = require('../models/topic');
 
@@ -50,7 +50,7 @@ purchasedRouter.route('/:courseId')
     .populate('topics')
     .then((course) => {
         if(course != null){
-            User.find(req.user._id)
+            User.findById(req.user._id)
             .then((user) => {
                 if(user != null){
                     if(user.boughtCourses != null) {
@@ -105,18 +105,15 @@ purchasedRouter.route('/:courseId')
 purchasedRouter.route('/:courseId/:topicId')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
-    console.log('requested');
     Course.findById(req.params.courseId)
-    .populate('author')
-    .populate('topics')
     .then((course) => {
         if(course != null){
             if(course.topics.indexOf(req.params.topicId) != -1){
-                User.find(req.user._id)
+                User.findById(req.user._id)
                 .then((user) => {
                     if(user != null){
                         if(user.boughtCourses != null) {
-                            if(user.boughtCourses.indexOf(course._id) == -1) {
+                            if(user.boughtCourses.indexOf(course._id) != -1) {
                                 Topic.findById(req.params.topicId)
                                 .populate('author')
                                 .then((topic) => {

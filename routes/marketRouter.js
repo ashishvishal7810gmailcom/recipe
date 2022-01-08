@@ -59,8 +59,58 @@ marketRouter.route('/:courseId')
     .catch((err) => next(err));
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    res.statusCode = 403;
-    res.end('PUT operation not supported on /market');
+    User.findById(req.user._id)
+    .then((user) => {
+        if(user.boughtCourses.indexOf(req.params.courseId) != -1) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({success: false, err: 'You have Already bought this course!'});          
+            // err = new Error('You have Already bought this course ');
+            // err.status = 400;
+            // return next(err);
+        }
+        else {
+
+            Course.findById(req.params.courseId)
+            .then((course) => {
+                if(course != null) {
+                    console.log("user verified");
+                    var updatedCourse;
+                    if(typeof course.numberOfTimesBought == 'undefined') {
+                        var updatedCourse = {
+                            numberOfTimesBought: 1
+                        }
+                    }
+                    else {
+                        updatedCourse = {
+                            numberOfTimesBought: course.numberOfTimesBought+1
+                        }
+                    }
+                    Course.findByIdAndUpdate(req.params.courseId, {
+                        $set: updatedCourse
+                    })
+                    .then((course) => {
+                        user.boughtCourses.push(course._id);
+                        user.save()
+                        .then((user) => {
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.json({success: true, status: 'Bought Successful!'});
+                        }, (err) => next(err))
+                    .catch((err) => next(err));
+                    }, (err) => next(err))
+                    .catch((err) => next(err));
+                }
+                else {
+                    err = new Error('Course ' + req.params.courseId + ' not found!');
+                    err.status = 404;
+                    return next(err);
+                }
+            }, (err) => next(err))
+            .catch((err) => next(err));
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err));
 })
 .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.VerifyAdmin, (req, res, next) => {
     res.statusCode = 403;
