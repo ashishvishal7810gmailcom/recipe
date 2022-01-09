@@ -60,6 +60,11 @@ const RenderCourses = (props) => {
             </div>
         );
     }
+    else if(props.courses == null || props.courses.courses.length == 0) {
+        return (
+        <h4>Purchased List is Empty</h4>
+        );
+    }
     else
         return (
             <div className="container">

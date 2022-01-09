@@ -63,6 +63,11 @@ const RenderItems = (props) => {
             </div>
         );
     }
+    else if(props.sellItem == null || props.sellItem.items.length == 0) {
+        return (
+        <h4>You have not created any course.</h4>
+        );
+    }
     else
         return (
             <div className="container">
