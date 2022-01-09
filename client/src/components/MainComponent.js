@@ -50,9 +50,15 @@ class Main extends Component {
     }
     const DashboardPage = () => {
       return(
+        this.props.auth.isAuthenticated
+        ?
         <Dashboard 
           auth={this.props.auth}
         />
+        :
+        <div>
+          {this.props.history.push("/home")}
+        </div>
       );
     }
 

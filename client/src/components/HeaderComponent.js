@@ -6,16 +6,25 @@ import LoginButton from './AuthComponents/LoginModalComponent';
 import Avatar from 'react-avatar';
 import { NavDropdown} from 'react-bootstrap';
 import { imageUrl } from '../shared/baseUrl';
+import LoginModal from './AuthComponents/Modals/LoginModal';
 class Header extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isNavOpen: false,
-            
+            isModalOpen: false,
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
     }
 
     toggleNav() {
@@ -29,10 +38,42 @@ class Header extends Component {
     }
 
     
+
+    
     
     render() {
         const Popup = () => {
             alert(this.props.fetchSuggestions);
+        }
+
+        const navItems = () => {
+            // if(this.props.auth.isAuthenticated) {
+                return (
+                    <Nav navbar>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/home">
+                                <span className="fa fa-home fa-lg"></span> Home
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/market">
+                                <span className="fa fa-shopping-cart fa-lg"></span> Market
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/sell">
+                                <span className="fa fa-plus fa-lg"></span> Sell
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/purchased">
+                                <span className="fa fa-shopping-basket fa-lg"></span> Purchased
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )
+
+            // }
         }
         
         return(
@@ -80,28 +121,53 @@ class Header extends Component {
                             <div className="col-12 mt-4 mb-2">
                                 <NavbarToggler onClick={this.toggleNav} />
                                 <Collapse isOpen={this.state.isNavOpen} navbar>
-                                    <Nav navbar>
-                                        <NavItem>
-                                            <NavLink className="nav-link" to="/home">
-                                                <span className="fa fa-home fa-lg"></span> Home
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink className="nav-link" to="/market">
-                                                <span className="fa fa-shopping-cart fa-lg"></span> Market
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink className="nav-link" to="/sell">
-                                                <span className="fa fa-plus fa-lg"></span> Sell
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink className="nav-link" to="/purchased">
-                                                <span className="fa fa-shopping-basket fa-lg"></span> Purchased
-                                            </NavLink>
-                                        </NavItem>
-                                    </Nav>
+                                    { this.props.auth.isAuthenticated ? 
+                                        <Nav navbar>
+                                            <NavItem>
+                                                <NavLink className="nav-link" to="/home">
+                                                    <span className="fa fa-home fa-lg"></span> Home
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link" to="/market">
+                                                    <span className="fa fa-shopping-cart fa-lg"></span> Market
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link" to="/sell">
+                                                    <span className="fa fa-plus fa-lg"></span> Sell
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link" to="/purchased">
+                                                    <span className="fa fa-shopping-basket fa-lg"></span> Purchased
+                                                </NavLink>
+                                            </NavItem>
+                                        </Nav>
+                                        :
+                                        <Nav navbar>
+                                            <NavItem>
+                                                <NavLink className="nav-link" to="/home">
+                                                    <span className="fa fa-home fa-lg"></span> Home
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/market">
+                                                    <span className="fa fa-shopping-cart fa-lg"></span> Market
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/sell">
+                                                    <span className="fa fa-plus fa-lg"></span> Sell
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink className="nav-link"onClick={this.toggleModal} to="/purchased">
+                                                    <span className="fa fa-shopping-basket fa-lg"></span> Purchased
+                                                </NavLink>
+                                            </NavItem>
+                                        </Nav>
+                                    }
                                     <Nav className="ms-auto" navbar>
                                         <NavItem>
                                             { !this.props.auth.isAuthenticated ?
@@ -132,6 +198,12 @@ class Header extends Component {
                         </div>
                     </div>
                 </Navbar>
+                <LoginModal isModalOpen={this.state.isModalOpen} 
+                    toggleModal={this.toggleModal}
+                    loginUser={this.props.loginUser} 
+                    logoutUser={this.props.logoutUser}
+                    signupUser={this.props.signupUser}
+                    />
             </React.Fragment>
         );
     }
