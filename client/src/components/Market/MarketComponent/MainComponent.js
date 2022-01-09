@@ -65,7 +65,7 @@ const RenderCourses = (props) => {
             </div>
         );
     }
-    else if(props.courses == null || props.courses.course.length == 0) {
+    else if(props.courses == null || props.courses.courses.length == 0) {
         return (
         <h4>There are not any available course.</h4>
         );
