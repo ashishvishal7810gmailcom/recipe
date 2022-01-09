@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchCourse: (initialRoute, courseId) => dispatch(fetchCourse(initialRoute, courseId)),
-    editCourse: (item, courseId) => dispatch(editCourse(item, courseId)),
+    editCourse: (item, courseId, history) => dispatch(editCourse(item, courseId, history)),
 });
 
 
@@ -90,7 +90,7 @@ class EditCourse extends Component {
         for (var value of item.values()) {
             console.log(value); 
         }
-        this.props.editCourse(item, this.props.courseId);
+        this.props.editCourse(item, this.props.courseId, this.props.history);
         this.props.history.push(`/sell/${this.props.courseId}`);
         event.preventDefault();
 

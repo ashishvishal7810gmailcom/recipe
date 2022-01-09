@@ -107,7 +107,7 @@ export const addEdittedCourse = (course) => ({
     type: ActionTypes.ADD_EDITTED_COURSE,
     payload: course
 });
-export const editCourse = (item, courseId) => (dispatch) => {
+export const editCourse = (item, courseId, history) => (dispatch) => {
     // dispatch(courseEditPosting());
 
     const bearer = 'Bearer ' + localStorage.getItem('token');
@@ -134,7 +134,10 @@ export const editCourse = (item, courseId) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(course => dispatch(addEdittedCourse(course)))
+    .then(course => {
+        history.push(`/sell/${courseId}`);
+        dispatch(addEdittedCourse(course))
+    })
     .catch(error => dispatch(courseEditPostFailed(error.message)));
 }
 
