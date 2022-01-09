@@ -26,7 +26,7 @@ function RenderCourse({course, description, data, currentContentAsHTML}) {
             <React.Fragment>
                 <div className="col-12 col-md-6">
                     <Card>
-                        <CardImg width="100%" src={`${baseUrl}${course.image}`} alt={course.title} height="150px" />
+                        <CardImg width="100%" src={`${imageUrl}${course.image}`} alt={course.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{course.title}</CardTitle>
                             <CardSubtitle>Price : ${course.price/100}</CardSubtitle>
