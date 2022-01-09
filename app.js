@@ -50,14 +50,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 // app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/apis/users', usersRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/suggestions', suggestionsRouter);
-app.use('/sell',sellRouter);
-app.use('/market',marketRouter);
-app.use('/purchased', purchasedRouter);
+app.use('/apis/suggestions', suggestionsRouter);
+app.use('/apis/sell',sellRouter);
+app.use('/apis/market',marketRouter);
+app.use('/apis/purchased', purchasedRouter);
 
 app.use(express.static(path.join(__dirname, 'client','build')));
 
