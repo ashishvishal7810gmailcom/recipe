@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
-    Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Input, Label } from 'reactstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 import SearchAS from './SearchASComponent';
-import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem,CardBody, CardHeader } from 'reactstrap';
 import LoginButton from './AuthComponents/LoginModalComponent';
 import Avatar from 'react-avatar';
 import { NavDropdown} from 'react-bootstrap';
-import { baseUrl } from '../shared/baseUrl';
 
 class Header extends Component {
 
@@ -47,7 +43,7 @@ class Header extends Component {
                         <div className="row">
                             <div className="col-2 mt-2">
                                 <NavbarBrand className="mr-auto" href="/">
-                                    <img src={`${baseUrl}images/logo.jpeg`} height="40" width="60"
+                                    <img src={`/images/logo.jpeg`} height="40" width="60"
                                         alt="Onepiece" />
                                 </NavbarBrand>
                             </div>
