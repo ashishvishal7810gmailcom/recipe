@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardSubtitle, CardText, CardBody, CardTitle, 
     Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { baseUrl } from '../../../../shared/baseUrl';
+import { imageUrl } from '../../../../shared/baseUrl';
 import { Loading } from '../../../LoadingComponent';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
@@ -28,7 +28,7 @@ function RenderCourse({course, description, data, currentContentAsHTML, purchase
             <React.Fragment>
                 <div className="col-12 col-md-6">
                     <Card>
-                        <CardImg width="100%" src={`${baseUrl}${course.image}`} alt={course.title} height="150px" />
+                        <CardImg width="100%" src={`${imageUrl}${course.image}`} alt={course.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{course.title}</CardTitle>
                             <CardSubtitle>Price : ${course.price/100}</CardSubtitle>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { imageUrl } from '../shared/baseUrl';
 class Home extends React.Component {
     
 
@@ -17,7 +18,7 @@ class Home extends React.Component {
     
     render() {
         return(
-            <img width="100%" src={`/images/welcome.png`} alt={"welcome"} height="700px" />
+            <img width="100%" src={`${imageUrl}images/welcome.png`} alt={"welcome"} height="700px" />
         );
     }
     

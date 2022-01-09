@@ -5,7 +5,7 @@ import SearchAS from './SearchASComponent';
 import LoginButton from './AuthComponents/LoginModalComponent';
 import Avatar from 'react-avatar';
 import { NavDropdown} from 'react-bootstrap';
-
+import { imageUrl } from '../shared/baseUrl';
 class Header extends Component {
 
     constructor(props) {
@@ -43,7 +43,7 @@ class Header extends Component {
                         <div className="row">
                             <div className="col-2 mt-2">
                                 <NavbarBrand className="mr-auto" href="/">
-                                    <img src={`/images/logo.jpeg`} height="40" width="60"
+                                    <img src={`${imageUrl}images/logo.jpeg`} height="40" width="60"
                                         alt="Onepiece" />
                                 </NavbarBrand>
                             </div>

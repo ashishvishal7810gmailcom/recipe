@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardSubtitle, CardText, CardBody, CardTitle, 
     Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { baseUrl } from '../../../../shared/baseUrl';
+import { imageUrl } from '../../../../shared/baseUrl';
 import { Loading } from '../../../LoadingComponent';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { convertToHTML } from 'draft-convert';

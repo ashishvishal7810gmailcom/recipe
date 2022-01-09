@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardSubtitle, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { baseUrl } from '../../../../shared/baseUrl';
+import { imageUrl } from '../../../../shared/baseUrl';
 import { Loading } from '../../../LoadingComponent';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
@@ -24,7 +24,7 @@ function RenderItem({item, currentContentAsHTML}) {
             <React.Fragment>
                 <div className="col-12 col-md-6">
                     <Card>
-                        <CardImg width="100%" src={`${baseUrl}${item.image}`} alt={item.title} height="150px" />
+                        <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
                             <CardSubtitle>Price : ${item.price/100}</CardSubtitle>

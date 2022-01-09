@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay,CardBody, CardSubtitle, CardText, Button, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { baseUrl } from '../../../shared/baseUrl';
+import { imageUrl } from '../../../shared/baseUrl';
 import { Loading } from '../../LoadingComponent';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ function RenderSingleCourse({course, purchaseCourse, history}) {
         <Card>
             <Link to={`/market/${course._id}`} className="text-decoration-none">
                     <Card>
-                        <CardImg width="100%" src={`${baseUrl}${course.image}`} alt={course.title} height="150px" />
+                        <CardImg width="100%" src={`${imageUrl}${course.image}`} alt={course.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{course.title}</CardTitle>
                             <CardSubtitle>Price : ${course.price/100}</CardSubtitle>

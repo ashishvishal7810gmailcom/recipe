@@ -61,7 +61,6 @@ class CreateCourse extends Component {
         item.append("description", rawState);
 
 
-        // axios.post(`${baseUrl}imageUpload`, item);
         console.log(item)
         this.props.postItem(item, this.props.history);
         //  to do
