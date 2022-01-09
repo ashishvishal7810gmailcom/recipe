@@ -55,6 +55,7 @@ class ItemDetail extends Component {
     }
 
     componentDidMount() {
+        if(!this.props.course.isLoading)
         this.props.fetchCourse('sell',this.props.courseId);
     }
 

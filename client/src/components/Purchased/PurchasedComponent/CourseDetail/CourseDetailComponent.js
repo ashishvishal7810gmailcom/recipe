@@ -64,6 +64,7 @@ class CourseDetails extends Component {
     }
 
     componentDidMount() {
+        if(!this.props.course.isLoading)
         this.props.fetchCourse('purchased',this.props.courseId);
     }
 

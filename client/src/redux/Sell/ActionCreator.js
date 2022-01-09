@@ -16,7 +16,7 @@ export const addItems = (items) => ({
 });
 
 export const fetchSellItem = () => (dispatch) => {
-    // dispatch(itemLoading());
+    dispatch(itemLoading());
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl+'sell' ,{

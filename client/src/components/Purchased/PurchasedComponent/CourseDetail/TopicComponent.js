@@ -28,6 +28,7 @@ class TopicTheoryRender extends Component {
     }
 
     componentDidMount() {
+        if(!this.props.topicTheory.isLoading)
         this.props.fetchTopicTheory('purchased',this.props.courseId, this.props.topicId)
     }
     render() {

@@ -20,7 +20,7 @@ export const addCourses = (courses) => ({
 });
 
 export const fetchCourses = (initialRoute) => (dispatch) => {
-    // dispatch(coursesLoading());
+    dispatch(coursesLoading());
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl+`${initialRoute}` ,{
@@ -104,7 +104,7 @@ export const addCourse = (course) => ({
 });
 
 export const fetchCourse = (initialRoute, courseId) => (dispatch) => {
-    // dispatch(courseLoading());
+    dispatch(courseLoading());
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl+`${initialRoute}/${courseId}` ,{
@@ -151,7 +151,7 @@ export const addTopic = (topic) => ({
 });
 
 export const fetchTopicTheory = (initialRoute, courseId, topicId) => (dispatch) => {
-    // dispatch(topicLoading());
+    dispatch(topicLoading());
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl+`${initialRoute}/${courseId}/${topicId}` ,{

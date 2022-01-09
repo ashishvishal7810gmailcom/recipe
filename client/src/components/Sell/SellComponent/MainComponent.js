@@ -79,6 +79,7 @@ class Sell extends Component {
         super(props);
     }
     componentDidMount() {
+        if(!this.props.sellItem.isLoading)
         this.props.fetchSellItem();
     }
 
@@ -103,8 +104,8 @@ class Sell extends Component {
                         </div>
                         <div>
                             {
-                                (this.props.sellItem.items == null || this.props.sellItem.items.length == 0)?
-                                <h4>Selling List is Empty</h4>:
+                                // (this.props.sellItem.items == null || this.props.sellItem.items.length == 0)?
+                                // <h4>Selling List is Empty</h4>:
                                 <RenderItems
                                     sellItem={this.props.sellItem}
                                 />

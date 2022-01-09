@@ -27,6 +27,7 @@ class TopicRender extends Component {
     }
 
     componentDidMount() {
+        if(!this.props.topics.isLoading)
         this.props.fetchTopics(this.props.courseId, this.props.topicId)
     }
     render() {

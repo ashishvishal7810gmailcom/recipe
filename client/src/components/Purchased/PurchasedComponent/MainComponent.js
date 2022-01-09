@@ -76,6 +76,7 @@ class PurchasedCourses extends Component {
         super(props);
     }
     async componentDidMount() {
+        if(!this.props.courses.isLoading)
         await this.props.fetchCourses('purchased');
     }
 
@@ -95,8 +96,8 @@ class PurchasedCourses extends Component {
                         </div>
                         <div>
                             {
-                                (this.props.courses == null || this.props.courses.courses.length == 0)?
-                                <h4>Purchased List is Empty</h4>:
+                                // (this.props.courses == null || this.props.courses.courses.length == 0)?
+                                // <h4>Purchased List is Empty</h4>:
                                 <RenderCourses
                                     courses={this.props.courses}
                                 />

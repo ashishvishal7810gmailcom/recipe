@@ -81,6 +81,7 @@ class marketCourses extends Component {
         super(props);
     }
     async componentDidMount() {
+        if(!this.props.courses.isLoading)
         await this.props.fetchCourses('market');
     }
 
@@ -100,8 +101,8 @@ class marketCourses extends Component {
                         </div>
                         <div>
                             {
-                                (this.props.courses == null || this.props.courses.courses.length == 0)?
-                                <h4>There are no courses</h4>:
+                                // (this.props.courses == null || this.props.courses.courses.length == 0)?
+                                // <h4>There are no courses</h4>:
                                 <RenderCourses
                                     courses={this.props.courses}
                                     purchaseCourse = {this.props.purchaseCourse}
