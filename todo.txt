@@ -1,5 +1,5 @@
-loading
-auto signup modal popup
+spinners on loading -- done
+auto signup modal popup -- done
 reduce image quality
-add code editor
 infinite rendering
+add code editor

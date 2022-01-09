@@ -12,6 +12,7 @@
     "bootstrap": "^5.1.0",
     "bootstrap-social": "5.1.1",
     "classnames": "^2.3.1",
+    "compressorjs": "^1.1.1",
     "cross-fetch": "^3.1.4",
     "draft-convert": "^2.1.12",
     "draft-js": "^0.11.7",
