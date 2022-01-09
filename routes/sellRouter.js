@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
     },
 
     filename: (req, file, cb) => {
+        console.log(file.originalname);
         var position = file.originalname.lastIndexOf('.')
         var fileName = file.originalname.slice(0,position)
         var extension = file.originalname.slice(position)

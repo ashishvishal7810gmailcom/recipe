@@ -8,6 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editCourse } from '../../../../../redux/Sell/ActionCreator';
 import { fetchCourse } from '../../../../../redux/Courses/ActionCreator';
+import Compressor from 'compressorjs';
+
 const mapStateToProps = state => {
   return {
     course : state.course
@@ -104,7 +106,17 @@ class EditCourse extends Component {
     // On file select (from the pop up)
 	onFileChange = event => {
         // Update the state
-        this.setState({ selectedFile: event.target.files[0] });
+        // this.setState({ selectedFile: event.target.files[0] });
+        const image = event.target.files[0];
+        new Compressor(image, {
+        quality: 0.8, // 0.6 can also be used, but its not recommended to go below.
+        success: (compressedResult) => {
+            // compressedResult has the compressed file.
+            // Use the compressed file to upload the images to your server.  
+            this.setState({ selectedFile: compressedResult });      
+            // setCompressedFile(compressedResult)
+        },
+        });
 	};
 
     onEditorStateChange = (editorState) => {
