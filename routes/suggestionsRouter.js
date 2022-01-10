@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
 const Users = require('../models/user');
-
+const Course = require('../models/course');
 const suggestionsRouter = express.Router();
 
 suggestionsRouter.use(bodyParser.json());
@@ -12,10 +12,20 @@ suggestionsRouter.use(bodyParser.json());
 suggestionsRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, (req,res,next) => {
+    // var skipData= parseInt(req.query.page)*18;
+    // console.log(skipData);
+    // Course.find({}).skip(skipData).limit(18)
+    // .populate('author')
+    // .then((course) => {
+    //     res.statusCode = 200;
+    //     res.setHeader('Content-Type', 'application/json');
+    //     res.json(course);
+    // }, (err) => next(err))
+    // .catch((err) => next(err));
+
     console.log(req.query.searchTerm);
     var name=req.query.searchTerm;
-    
-    Users.find({username: { $regex: '.*' + name + '.*' }}).limit(5)
+    Course.find({title: new RegExp(name, 'i')}).limit(5)
     .then((suggestions) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

@@ -69,7 +69,7 @@ class SearchAS extends React.Component {
   }
 
   renderSuggestion= (suggestion, { query }) => {
-    const suggestionText = suggestion.username;
+    const suggestionText = suggestion.title;
     const matches = match(suggestionText, query);
     const parts = parse(suggestionText, matches);
   
@@ -80,6 +80,7 @@ class SearchAS extends React.Component {
               parts.map((part, index) => {
                 const className = part.highlight ? 'highlight' : null;
                 return (
+                  // <span><img src=''/><span>
                   <span className={className} key={index}>{part.text}</span>
                 );
               })
