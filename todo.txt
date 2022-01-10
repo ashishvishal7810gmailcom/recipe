@@ -1,5 +1,6 @@
 spinners on loading -- done
 auto signup modal popup -- done
-reduce image quality
-infinite rendering
+reduce image quality -- done
+infinite rendering -- done for market course
+search component add
 add code editor

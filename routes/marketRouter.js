@@ -14,7 +14,10 @@ marketRouter.use(bodyParser.json());
 marketRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
-    Course.find({})
+
+    var skipData= parseInt(req.query.page)*18;
+    console.log(skipData);
+    Course.find({}).skip(skipData).limit(18)
     .populate('author')
     .then((course) => {
         res.statusCode = 200;

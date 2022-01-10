@@ -39,7 +39,7 @@ const RenderItems = (props) => {
 
     const items = props.sellItem.items.map((item) => {
         return (
-            <div key={item._id} className="col-12 col-md-6 col-lg-4">
+            <div key={item._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
                 <RenderSellItem item={item} />
             </div>
         );
