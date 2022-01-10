@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
-    Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Input, Label } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label } from 'reactstrap';
 import FBLogin from '../Logins/FacebookLoginComponent';
-import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem,CardBody, CardHeader } from 'reactstrap';
 import GLogin from '../Logins/GoogleLoginComponent';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import SignUpModal from './SignUpModal';
@@ -102,12 +98,12 @@ class LoginModal extends Component {
                             <FormGroup className="text-center mt-3 mb-3">
                                 <Button type="submit" value="submit" color="primary">Login</Button>
                             </FormGroup>
-                            <FormGroup className="mb-2">
+                            {/* <FormGroup className="mb-2">
                                 <FBLogin />
                             </FormGroup>
                             <FormGroup className="mb-2">
                                 <GLogin />
-                            </FormGroup> 
+                            </FormGroup>  */}
                             <FormGroup className="text-center">
                                 <Label>
                                     Don't have an account?

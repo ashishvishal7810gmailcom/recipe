@@ -60,7 +60,10 @@ export const loginUser = (creds) => (dispatch) => {
             throw error;
         }
     })
-    .catch(error => dispatch(loginError(error.message)))
+    .catch(error => {
+        dispatch(loginError(error.message));
+        alert(error.message);
+    })
 };
 
 export const requestLogout = () => {

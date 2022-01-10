@@ -51,12 +51,12 @@ class SignUpModal extends Component {
                             <FormGroup className="text-center mt-2 mb-3">
                                 <Button type="submit" value="submit" color="primary">Register</Button>
                             </FormGroup>
-                            <FormGroup className="mb-2">
+                            {/* <FormGroup className="mb-2">
                                 <FBLogin />
                             </FormGroup>
                             <FormGroup className="mb-2">
                                 <GLogin />
-                            </FormGroup>
+                            </FormGroup> */}
                             <FormGroup className="text-center">
                                 <Label>
                                     Already have an account?
