@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import Select from 'react-select';
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
@@ -8,7 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editCourse } from '../../../../../redux/Sell/ActionCreator';
 import { fetchCourse } from '../../../../../redux/Courses/ActionCreator';
-import Compressor from 'compressorjs';
+import convert from 'image-file-resize';
+
 
 const mapStateToProps = state => {
   return {
@@ -107,16 +108,26 @@ class EditCourse extends Component {
 	onFileChange = event => {
         // Update the state
         // this.setState({ selectedFile: event.target.files[0] });
-        const image = event.target.files[0];
-        new Compressor(image, {
-        quality: 0.8, // 0.6 can also be used, but its not recommended to go below.
-        success: (compressedResult) => {
-            // compressedResult has the compressed file.
-            // Use the compressed file to upload the images to your server.  
-            this.setState({ selectedFile: compressedResult });      
-            // setCompressedFile(compressedResult)
-        },
-        });
+        // const image = event.target.files[0];
+        // new Compressor(image, {
+        // quality: 0.8, // 0.6 can also be used, but its not recommended to go below.
+        // success: (compressedResult) => {
+        //     // compressedResult has the compressed file.
+        //     // Use the compressed file to upload the images to your server.  
+        //     this.setState({ selectedFile: compressedResult });      
+        //     // setCompressedFile(compressedResult)
+        // },
+        // });
+        convert({ 
+            file: event.target.files[0],  
+            width: 300, 
+            height: 200, 
+            type: 'jpeg'
+            }).then(resp => {
+                this.setState({ selectedFile: resp });
+            }).catch(error => {
+                 alert("please reselect Image");
+            })
 	};
 
     onEditorStateChange = (editorState) => {
