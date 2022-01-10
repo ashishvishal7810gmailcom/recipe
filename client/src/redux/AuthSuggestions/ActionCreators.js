@@ -208,3 +208,19 @@ export const fetchSuggestions = (searchTerm) => (dispatch) => {
     .then(suggestions => dispatch(receiveSuggestions(suggestions)))
     .catch(error => dispatch(SuggestionsError(error.message)));
 }
+
+/* ==========================================================
+                SEARCHES
+============================================================*/
+
+
+export const requestSearches = (searchTerm) => {
+    return {
+        type: ActionTypes.SEARCH_REQUEST,
+        searchTerm
+    }
+}
+
+export const initiateSearches = (searchTerm) => (dispatch) => {
+    dispatch(requestSearches(searchTerm));
+}

@@ -5,27 +5,20 @@ var authenticate = require('../authenticate');
 const cors = require('./cors');
 const Users = require('../models/user');
 const Course = require('../models/course');
-const suggestionsRouter = express.Router();
 
-suggestionsRouter.use(bodyParser.json());
+const searchRouter = express.Router();
 
-suggestionsRouter.route('/')
+searchRouter.use(bodyParser.json());
+
+searchRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
-.get(cors.cors, (req,res,next) => {
-    // var skipData= parseInt(req.query.page)*18;
-    // console.log(skipData);
-    // Course.find({}).skip(skipData).limit(18)
-    // .populate('author')
-    // .then((course) => {
-    //     res.statusCode = 200;
-    //     res.setHeader('Content-Type', 'application/json');
-    //     res.json(course);
-    // }, (err) => next(err))
-    // .catch((err) => next(err));
-
+.get(cors.cors, authenticate.verifyUser, (req,res,next) => {
+    console.log(req.query.searchTerm);
     var name=req.query.searchTerm;
-    Course.find({title: new RegExp(name, 'i')}, {title:1, _id:1}).limit(5)
+    Course.find({title: new RegExp(name, 'i')}).limit(18)
+    .populate('author')
     .then((suggestions) => {
+        console.log(suggestions);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(suggestions);
@@ -34,15 +27,15 @@ suggestionsRouter.route('/')
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.VerifyAdmin, (req, res, next) => {
     res.statusCode = 403;
-    res.end('POST operation not supported on /suggestions');
+    res.end('POST operation not supported on /search');
 })
 .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.VerifyAdmin, (req, res, next) => {
     res.statusCode = 403;
-    res.end('PUT operation not supported on /suggestions');
+    res.end('PUT operation not supported on /search');
 })
 .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.VerifyAdmin, (req, res, next) => {
     res.statusCode = 403;
-    res.end('DELETE operation not supported on /suggestions');    
+    res.end('DELETE operation not supported on /search');    
 });
 
-module.exports = suggestionsRouter;
+module.exports = searchRouter;

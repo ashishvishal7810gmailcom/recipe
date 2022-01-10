@@ -15,6 +15,7 @@ var suggestionsRouter = require('./routes/suggestionsRouter');
 var sellRouter = require('./routes/sellRouter');
 var marketRouter = require('./routes/marketRouter');
 var purchasedRouter = require('./routes/purchasedRouter');
+var searchRouter = require('./routes/search');
 const mongoose = require('mongoose');
 
 const url = config.mongoUrl;
@@ -58,6 +59,7 @@ app.use('/apis/suggestions', suggestionsRouter);
 app.use('/apis/sell',sellRouter);
 app.use('/apis/market',marketRouter);
 app.use('/apis/purchased', purchasedRouter);
+app.use('/apis/search', searchRouter);
 
 
 if (process.env.NODE_ENV === 'production') {

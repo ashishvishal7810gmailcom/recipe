@@ -3,18 +3,19 @@ import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { fetchSuggestions } from '../redux/AuthSuggestions/ActionCreators';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
-
+import { initiateSearches } from '../redux/AuthSuggestions/ActionCreators';
 const mapStateToProps = state => {
   return {
-    suggestions: state.suggestions
+    suggestions: state.suggestions,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-fetchSuggestions: (searchTerm) => dispatch(fetchSuggestions(searchTerm))
+  fetchSuggestions: (searchTerm) => dispatch(fetchSuggestions(searchTerm)),
+  initiateSearches: (searchTerm) => dispatch(initiateSearches(searchTerm))
 });
 
 
@@ -37,16 +38,17 @@ class SearchAS extends React.Component {
   }
 
   onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }){
-    if(this.props.location.pathname === '/addusers') {
-      // alert("already at /addusers");
+    if(this.props.location.pathname === '/search') {
+      this.props.history.push("/search");
     }
     else {
-      this.props.history.push("/addusers");
+      this.props.history.push("/search");
     }
-    this.props.fetchSearches(suggestionValue);
+    this.props.initiateSearches(suggestionValue);
   }
   
   onChange = (event, { newValue, method }) => {
+    console.log(newValue)
     this.setState({
       value: newValue
     });
@@ -65,7 +67,7 @@ class SearchAS extends React.Component {
 
   // bug here, initially there is true value which tries to fetch true as search term
   getSuggestionValue= (suggestion) => {
-    return suggestion.username;
+    return suggestion.title;
   }
 
   renderSuggestion= (suggestion, { query }) => {
@@ -80,7 +82,6 @@ class SearchAS extends React.Component {
               parts.map((part, index) => {
                 const className = part.highlight ? 'highlight' : null;
                 return (
-                  // <span><img src=''/><span>
                   <span className={className} key={index}>{part.text}</span>
                 );
               })
@@ -94,13 +95,13 @@ class SearchAS extends React.Component {
   handleKeyDown(event) {
     switch (event.key) {
       case 'Enter':
-        if(this.props.location.pathname === '/addusers') {
-          // alert("already at /addusers");
+        if(this.props.location.pathname === '/search') {
+          this.props.history.push("/search");
         }
         else {
-          this.props.history.push("/addusers");
+          this.props.history.push("/search");
         }
-        this.props.fetchSearches(this.state.value);
+        this.props.initiateSearches(this.state.value);
         break;
     }
   }
@@ -109,7 +110,7 @@ class SearchAS extends React.Component {
   render() {
     const { value } = this.state;
     const inputProps = {
-      placeholder: "Search User",
+      placeholder: "Search Courses",
       value,
       onChange: this.onChange
     };

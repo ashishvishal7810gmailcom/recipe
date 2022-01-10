@@ -148,7 +148,7 @@ class marketCourses extends Component {
             if(this.state.courses.length==0) {
                 this.setState({noCourseExists: `No Courses exist` })
             }
-            else if(course.length <= 2){
+            else if(course.length <= 18){
                 this.setState({hasMore: false});
             }
             else {

@@ -7,6 +7,7 @@ import { EditTopic } from './EditTopic/Topic';
 import { Courses } from './Courses/Courses';
 import { Course } from './Courses/Course';
 import { TopicTheory } from './Courses/TopicTheory';
+import { Searches } from './AuthSuggestions/search';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -20,7 +21,8 @@ export const ConfigureStore = () => {
             editTopic: EditTopic,
             courses: Courses,
             course: Course,
-            topicTheory: TopicTheory
+            topicTheory: TopicTheory,
+            searches: Searches
         }),
         applyMiddleware(thunk, logger)
     );

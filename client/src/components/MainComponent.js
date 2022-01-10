@@ -6,6 +6,7 @@ import Dashboard from './Dashboard/DashboardComponent';
 import SellRouter from './Sell/SellRouter';
 import MarketRouter from './Market/MarketRouter';
 import PurchasedRouter from './Purchased/PurchasedRouter';
+import SearchedCourses from './RenderSearchCourse/RenderCourse';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser, loginUser, logoutUser } from '../redux/AuthSuggestions/ActionCreators';
@@ -97,6 +98,17 @@ class Main extends Component {
         </div>
       );
     }
+    const SearchPage = () => {
+      return(
+        this.props.auth.isAuthenticated
+        ?
+        <SearchedCourses />
+        :
+        <div>
+          {this.props.history.push("/home")}
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -109,6 +121,7 @@ class Main extends Component {
           <CSSTransition key={this.props.location.key} classNames="page" timeout={300}> */}
             <Switch>
               <Route exact path="/home" component={HomePage} />
+              <Route exact path="/search" component={SearchPage} />
               <Route path="/market" component={MarketPage} />
               <Route path="/sell" component={ SellPage } />
               <Route path="/purchased" component={PurchasedPage} />
