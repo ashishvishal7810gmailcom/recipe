@@ -7,10 +7,10 @@ import SellRouter from './Sell/SellRouter';
 import MarketRouter from './Market/MarketRouter';
 import PurchasedRouter from './Purchased/PurchasedRouter';
 import SearchedCourses from './RenderSearchCourse/RenderCourse';
+import CodeEditor from './CodeEditor';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser, loginUser, logoutUser } from '../redux/AuthSuggestions/ActionCreators';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import jwt_decode from 'jwt-decode';
 
 const mapStateToProps = state => {
@@ -45,8 +45,9 @@ class Main extends Component {
   render() {
     const HomePage = () => {
       return(
-        <Home 
-        />
+        <CodeEditor />
+        // <Home 
+        // />
       );
     }
     const DashboardPage = () => {
