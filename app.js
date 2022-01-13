@@ -6,18 +6,20 @@ var logger = require('morgan');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var passport = require('passport');
+
+
 var authenticate = require('./authenticate');
 var config = require('./config');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var recipeRouter = require('./routes/recipeRouter');
+var createRouter = require('./routes/createRouter');
+var favouriteRouter = require('./routes/favouriteRouter');
 var suggestionsRouter = require('./routes/suggestionsRouter');
-var sellRouter = require('./routes/sellRouter');
-var marketRouter = require('./routes/marketRouter');
-var purchasedRouter = require('./routes/purchasedRouter');
 var searchRouter = require('./routes/search');
-const mongoose = require('mongoose');
 
+
+const mongoose = require('mongoose');
 const url = config.mongoUrl;
 const connect = mongoose.connect(url);
 
@@ -50,15 +52,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 
-// app.use('/', indexRouter);
 app.use('/apis/users', usersRouter);
-
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/apis/create',createRouter);
+app.use('/apis/recipe',recipeRouter);
+app.use('/apis/favourite', favouriteRouter);
 app.use('/apis/suggestions', suggestionsRouter);
-app.use('/apis/sell',sellRouter);
-app.use('/apis/market',marketRouter);
-app.use('/apis/purchased', purchasedRouter);
 app.use('/apis/search', searchRouter);
 
 
@@ -69,16 +68,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-// Serve static assets if in production
-// if (process.env.NODE_ENV === 'production') {
-//   // Set static folder
-//   app.use(express.static('client/build'));
-
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-//   });
-// }
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
