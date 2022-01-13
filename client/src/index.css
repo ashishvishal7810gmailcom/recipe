@@ -307,12 +307,9 @@ i.fa {
 }
 
 /* =========================================
-editor
+special card
 ==========================================*/
-.wrapper-class {
-  border: 1px solid rgba(151, 179, 187, 0.986) !important;
-}
-.editor-class {
-  border: 1px solid #000 !important;
-  min-height: 400px;
-}
+.special-card {
+    background-color:none;
+    opacity: .8;
+  }

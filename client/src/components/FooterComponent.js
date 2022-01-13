@@ -10,8 +10,9 @@ function Footer(props) {
                         <h5>Links</h5>
                         <ul className="list-unstyled">
                             <li><Link to="/home">Home</Link></li>
-                            <li><Link to="/sell">Sell</Link></li>
-                            <li><Link to="/market">Market</Link></li>
+                            <li><Link to="/recipes">Recipes</Link></li>
+                            <li><Link to="/create">Create</Link></li>
+                            <li><Link to="/favourites">Favourite</Link></li>
                         </ul>
                     </div>
                     <div className="col-7 col-sm-5">

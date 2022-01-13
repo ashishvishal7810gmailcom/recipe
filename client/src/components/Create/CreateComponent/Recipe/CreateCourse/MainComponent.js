@@ -121,39 +121,37 @@ class CreateCourse extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="mt-4">
-                            <h4>Create New Course</h4>
+                            <h4>Create New Recipe</h4>
                             <hr />
                         </div>
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
-                                <Label htmlFor="itemname">Course Name</Label>
+                                <Label htmlFor="itemname">Recipe Name</Label>
                                 <Input type="text" id="itemname" name="itemname"
                                     innerRef={(input) => this.itemname = input} 
-                                    // required
+                                    required
+                                />
+                            </FormGroup>
+                            
+                            <FormGroup>
+                                <Label htmlFor="ingredients">Ingredients</Label>
+                                <Input type="text" id="ingredients" name="ingredients"
+                                    innerRef={(input) => this.ingredients = input} 
+                                    required
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="price">Price</Label>
-                                <Input type="text" id="price" name="price"
-                                    innerRef={(input) => this.price = input} 
-                                    // required
+                                <Label htmlFor="description">Description</Label>
+                                <Input type="textarea" id="description" name="description"
+                                    innerRef={(input) => this.description = input} 
+                                    required
                                 />
                             </FormGroup>
-                            <FormGroup className="mt-3 mb-4">
-                                <Label htmlFor="category">Category</Label>
-                                <Select
-                                    value={selectedOption}
-                                    onChange={this.handleChange}
-                                    options={options}
-                                    isMulti='true'
-                                    isSearchable='true'
-                                    placeholder='Select Category'
-                                />
-                            </FormGroup>
-                            <FormGroup className="mb-4">
-                                <Label for="itemImage">Image</Label>
+                            <FormGroup className="mb-4 mt-4">
+                                <Label htmlFor="itemImage">Image</Label>
                                 <Input type="file" id="itemImage" name="itemImage"
                                     onChange={this.onFileChange} 
+                                    required
                                 />
                             </FormGroup>
                             <FormGroup style = {{minHeight: "400px"}}>
@@ -164,7 +162,7 @@ class CreateCourse extends Component {
                                     editorState={editorState}
                                     toolbarClassName="toolbarClassName"
                                     onEditorStateChange={this.onEditorStateChange}
-                                    placeholder="Course Description"
+                                    placeholder="Recipe Steps"
                                 />
                             </FormGroup>
                             

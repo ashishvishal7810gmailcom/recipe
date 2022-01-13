@@ -98,13 +98,13 @@ class Sell extends Component {
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>Sell</BreadcrumbItem>
                         </Breadcrumb>
-                        <div className="col-4">
-                            <h3>Courses</h3>
+                        <div className="col-6">
+                            <h3>My Created Recipes</h3>
                             <hr />
                         </div>
-                        <div className="col-8">
-                            <Link to="/sell/createcourse" className="pull-right shadow-none">
-                                <span className="fa fa-plus fa-lg"></span>  Create New Course
+                        <div className="col-6">
+                            <Link to="/create/createrecipe" className="pull-right shadow-none">
+                                <span className="fa fa-plus fa-lg"></span>  Create New Recipe
                             </Link>
                         </div>
                         <div>

@@ -5,3 +5,36 @@ infinite rendering -- done for market course
 search component add -- done
 forgot password 
 add code editor
+
+# food-recipe
+
+Laughter is brightest where food is best.
+
+“Cooking is like love. It should be entered into with abandon or not at all.”
+– Harriet Van Horne
+
+“Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors—it’s how you combine them that sets you apart.”
+– Wolfgang Puck
+
+“If you are a chef, no matter how good a chef you are, it’s not good cooking for yourself; the joy is in cooking for others. It’s the same with music.”
+– will.i.am
+
+“Cooking is not difficult. Everyone has taste, even if they don’t realize it. Even if you’re not a great chef, there’s nothing to stop you understanding the difference between what tastes good and what doesn’t.”
+– Gerard Depardieu
+
+
+Home ->  welcome notes with go to reciepe
+Reciepes --> search Reciepe --> render individual reciepe
+My Reciepes --> create reciepe --> (dish name/image/reciepe description/ingredients)
+
+
+Model
+User --> createdreciepe, favouritereciepe, 
+reciepe --> author, title, ingredient, steps, image, category
+
+
+
+Cook easy with the recipe and eat tasty what you love
+
+Want to make something tasty and healthy? 
+Then come here and get the recipe from best chef

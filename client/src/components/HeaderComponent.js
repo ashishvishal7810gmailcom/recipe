@@ -129,18 +129,18 @@ class Header extends Component {
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/market">
-                                                    <span className="fa fa-shopping-cart fa-lg"></span> Market
+                                                <NavLink className="nav-link" to="/recipes">
+                                                    <span className="fa fa-list fa-lg"></span> Recipes
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/sell">
-                                                    <span className="fa fa-plus fa-lg"></span> Sell
+                                                <NavLink className="nav-link" to="/create">
+                                                    <span className="fa fa-plus fa-lg"></span> Create
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/purchased">
-                                                    <span className="fa fa-shopping-basket fa-lg"></span> Purchased
+                                                <NavLink className="nav-link" to="/favourites">
+                                                    <span className="fa fa-heart fa-lg"></span> Favourite
                                                 </NavLink>
                                             </NavItem>
                                         </Nav>

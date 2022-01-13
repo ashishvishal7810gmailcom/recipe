@@ -3,7 +3,7 @@ import Home from './HomeComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Dashboard from './Dashboard/DashboardComponent';
-import SellRouter from './Sell/SellRouter';
+import CreateRouter from './Create/CreateRouter';
 import MarketRouter from './Market/MarketRouter';
 import PurchasedRouter from './Purchased/PurchasedRouter';
 import SearchedCourses from './RenderSearchCourse/RenderCourse';
@@ -45,9 +45,9 @@ class Main extends Component {
   render() {
     const HomePage = () => {
       return(
-        <CodeEditor />
-        // <Home 
-        // />
+        // <CodeEditor />
+        <Home 
+        />
       );
     }
     const DashboardPage = () => {
@@ -64,11 +64,11 @@ class Main extends Component {
       );
     }
 
-    const SellPage = ({match}) => {
+    const CreatePage = ({match}) => {
       return(
         this.props.auth.isAuthenticated
         ?
-        <SellRouter match={match}/>
+        <CreateRouter match={match}/>
         :
         <div>
           {this.props.history.push("/home")}
@@ -76,7 +76,7 @@ class Main extends Component {
       );
     }
 
-    const MarketPage = ({match}) => {
+    const RecipesPage = ({match}) => {
       return(
         this.props.auth.isAuthenticated
         ?
@@ -88,7 +88,7 @@ class Main extends Component {
       );
     }
 
-    const PurchasedPage = ({match}) => {
+    const FavouritesPage = ({match}) => {
       return(
         this.props.auth.isAuthenticated
         ?
@@ -123,9 +123,9 @@ class Main extends Component {
             <Switch>
               <Route exact path="/home" component={HomePage} />
               <Route exact path="/search" component={SearchPage} />
-              <Route path="/market" component={MarketPage} />
-              <Route path="/sell" component={ SellPage } />
-              <Route path="/purchased" component={PurchasedPage} />
+              <Route path="/recipes" component={RecipesPage} />
+              <Route path="/create" component={ CreatePage } />
+              <Route path="/favourites" component={FavouritesPage} />
               <Route path="/:User" component={DashboardPage} />
               <Redirect to="/home" />
             </Switch>
