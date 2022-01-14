@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import isEqual from 'lodash.isequal';
 
 export const Recipes = (state = {
         isLoading: false,

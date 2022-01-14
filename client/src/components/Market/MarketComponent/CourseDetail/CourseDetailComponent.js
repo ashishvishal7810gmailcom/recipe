@@ -20,9 +20,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 function RenderItem({item, currentContentAsHTML}) {
+    const ingredients = item.ingredients.map((ingredient) => {
+        return <li>{ingredient}</li>
+    });
         return(
             <React.Fragment>
-                <div className="row mb-4">
+                <div className="row mb-2">
                     <div className="col-10 offset-1 col-md-4 offset-md-2 col-lg-4 offset-lg-2">
                         <Card>
                             <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="200px" />
@@ -33,11 +36,23 @@ function RenderItem({item, currentContentAsHTML}) {
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-10 offset-1 col-md-4 offset-md-1 col-lg-4 mt-3">
-                            <blockquote>{item.description}</blockquote>
-                            {/* <CardBody className="text-center text-dark text-capitalize">
-                                <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.description}</CardTitle>
-                            </CardBody> */}
+                    <div className="col-10 offset-1 col-md-4 offset-md-1 col-lg-4 mt-2">
+                        <Card className="mb-2">
+                            <CardBody className="text-dark text-capitalize">
+                                <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Dish Description</CardTitle>
+                                <hr />
+                                <CardSubtitle><i>{item.description}</i></CardSubtitle>
+                            </CardBody>
+                            
+                        </Card>
+                        <Card>
+                            <CardBody className="text-dark text-capitalize">
+                                <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Dish Ingredients</CardTitle>
+                                <hr />
+                                <CardSubtitle><ol>{ingredients}</ol></CardSubtitle>
+                            </CardBody>
+                        </Card>
+                        
                     </div>
                 </div>
                 <div className="col-12">

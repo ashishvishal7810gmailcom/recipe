@@ -15,15 +15,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
 });
 
-function RenderSingleCourse({course, history}) {
+function RenderSingleCourse({recipe, history}) {
     return(
         <Card>
-            <Link to={`/market/${course._id}`} className="text-decoration-none">
+            <Link to={`/recipes/${recipe._id}`} className="text-decoration-none">
                     <Card>
-                        <CardImg left width="100%" src={`${imageUrl}${course.image}`} alt={course.title} height="150px" />
+                        <CardImg left width="100%" src={`${imageUrl}${recipe.image}`} alt={recipe.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
-                            <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{course.title}</CardTitle>
-                            <CardSubtitle>Price : ${course.price/100}</CardSubtitle>
+                            <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{recipe.title}</CardTitle>
                         </CardBody>
                     </Card>
             </Link>
@@ -35,7 +34,7 @@ class SearchedCourses extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses: [],
+            recipes: [],
             loading: false,
             page: 0,
             prevY: 0,
@@ -47,7 +46,7 @@ class SearchedCourses extends Component {
     }
 
     componentDidMount() {
-        this.getcourses(this.state.page);
+        this.getrecipes(this.state.page);
 
         var options = {
             root: null,
@@ -62,7 +61,7 @@ class SearchedCourses extends Component {
         this.observer.observe(this.loadingRef);
     }
 
-    getcourses(page) {
+    getrecipes(page) {
         if(this.props.searches.searchTerm == null || this.props.searches.searchTerm.length<1){
             this.setState({hasMore: true});
             this.setState({infoMess: "Type something in the searchbox to search"});
@@ -94,10 +93,10 @@ class SearchedCourses extends Component {
                 })
             .then(response => response.json())
             .then(searchResult => {
-                this.setState({ courses: [...this.state.courses, ...searchResult] });
+                this.setState({ recipes: [...this.state.recipes, ...searchResult] });
                 console.log(searchResult);
                 this.setState({ loading: false });
-                if(this.state.courses.length==0) {
+                if(this.state.recipes.length==0) {
                     this.setState({noCourseExists: `No Course exist with title: ${this.props.searches.searchTerm}` })
                 }
                 else if(searchResult.length < 18){
@@ -120,7 +119,7 @@ class SearchedCourses extends Component {
     handleObserver(entities, observer) {
         const y = entities[0].boundingClientRect.y;
         if (this.state.prevY > y && this.state.hasMore) {
-            this.getcourses(this.state.page);            
+            this.getrecipes(this.state.page);            
         }
         this.setState({ prevY: y });
     }
@@ -139,10 +138,10 @@ class SearchedCourses extends Component {
                     </Breadcrumb>
                 </div>
                 <div className="row mt-4 mb-4">
-                    {this.state.courses.map((course) => {
+                    {this.state.recipes.map((recipe) => {
                             return (
-                            <div key={course._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
-                                <RenderSingleCourse course={course} 
+                            <div key={recipe._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
+                                <RenderSingleCourse recipe={recipe} 
                                     history = {this.props.history}
                                 />
                             </div>)

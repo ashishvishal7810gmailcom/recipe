@@ -48,6 +48,7 @@ createRouter.route('/')
         }
         else {
             var ingredients = req.body.ingredients.split(",");
+            ingredients = ingredients.map(v => v.toLowerCase());
             console.log(ingredients);
 
             var recipe = new Recipe({
@@ -140,6 +141,8 @@ createRouter.route('/:recipeId')
                     else {
                         if(typeof req.file != 'undefined') {
                             var ingredients = req.body.ingredients.split(",");
+                            ingredients = ingredients.map(v => v.toLowerCase());
+
                             console.log(ingredients);
 
                             var updatedRecipe = {
@@ -163,6 +166,8 @@ createRouter.route('/:recipeId')
                         }
                         else {
                             var ingredients = req.body.ingredients.split(",");
+                            ingredients = ingredients.map(v => v.toLowerCase());
+
                             console.log(ingredients);
                             var updatedRecipe = {
                                 author: req.user._id,
@@ -193,9 +198,41 @@ createRouter.route('/:recipeId')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
-.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.VerifyAdmin, (req, res, next) => {
-    res.statusCode = 403;
-    res.end('DELETE operation not supported on /create/recipeId');
+.delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+
+    User.findById(req.user._id)
+    .then((user) => {
+        var index = user.createdReciepes.indexOf(req.params.recipeId);
+        if(index > -1) {
+            user.createdReciepes.splice(index,1);
+            user.save()
+            .then((user) => {
+                Recipe.findByIdAndRemove(req.params.recipeId)
+                .then((resp) => {
+                    if(res != null){
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.json(resp);
+                    }
+                    else {
+                        err = new Error('Recipe ' + req.params.recipeId + ' not found!');
+                        err.status = 404;
+                        return next(err);
+                    }
+                }, (err) => next(err))
+                .catch((err) => next(err));
+
+            }, (err) => next(err))
+            .catch((err) => next(err));
+        }
+        else {
+            err = new Error('Unauthorized Acces');
+            err.status = 401;
+            return next(err);
+        }
+
+    }, (err) => next(err))
+    .catch((err) => next(err));
 });
 
 

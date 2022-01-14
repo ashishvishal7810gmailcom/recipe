@@ -14,13 +14,14 @@ searchRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
     var name=req.query.searchTerm;
-    Recipe.find({title: new RegExp(name, 'i')}).limit(18)
+    var skipData= parseInt(req.query.page)*18;
+    
+    Recipe.find({ $or:[ {title: new RegExp(name, 'i')}, { ingredients: {"$in":name.toLowerCase()} } ]}).skip(skipData).limit(18)
     .populate('author')
-    .then((suggestions) => {
-        console.log(suggestions);
+    .then((search) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(suggestions);
+        res.json(search);
     }, (err) => next(err))
     .catch((err) => next(err));
 })

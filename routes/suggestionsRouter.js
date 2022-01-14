@@ -13,7 +13,8 @@ suggestionsRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, (req,res,next) => {
     var name=req.query.searchTerm;
-    Recipe.find({title: new RegExp(name, 'i')}, {title:1, _id:1}).limit(5)
+
+    Recipe.find({ $or:[ {title: new RegExp(name, 'i')}, { ingredients: {"$in":name.toLowerCase()} } ]}, {title:1, _id:1}).limit(5)
     .then((suggestions) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

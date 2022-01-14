@@ -110,7 +110,7 @@ class SearchAS extends React.Component {
   render() {
     const { value } = this.state;
     const inputProps = {
-      placeholder: "Search Courses",
+      placeholder: "Search Recipes",
       value,
       onChange: this.onChange
     };
