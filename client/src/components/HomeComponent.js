@@ -30,7 +30,7 @@ class Home extends React.Component {
                     </CardTitle>
                     <CardSubtitle>
                       Want to make something tasty and healthy? 
-                      Then come here and get the recipe from best chef. 
+                      Then come here and get the recipe from the best chef. 
                     </CardSubtitle>
                     <Link to="/recipes">
                     <Button className="btn btn-info"> <i className="fa fa-arrow-right" aria-hidden="true"></i>Go to Recipes</Button>

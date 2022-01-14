@@ -5,49 +5,46 @@ import { imageUrl, baseUrl } from '../../../shared/baseUrl';
 import { Loading } from '../../LoadingComponent';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchCourses, purchaseCourse } from '../../../redux/Courses/ActionCreator';
+import { fetchRecipes } from '../../../redux/Recipe/ActionCreator';
 
 const mapStateToProps = state => {
     return {
-        // courses: state.courses
+        // recipes: state.recipes
     }
   }
   
 const mapDispatchToProps = (dispatch) => ({
-    fetchCourses: (initialRoute) => dispatch(fetchCourses(initialRoute)),
-    purchaseCourse: (initialRoute, courseId, history) => dispatch(purchaseCourse(initialRoute, courseId, history))
+    fetchRecipes: (initialRoute) => dispatch(fetchRecipes(initialRoute)),
 });
 
-function RenderSingleCourse({course, purchaseCourse, history}) {
+function RenderSingleCourse({recipe, history}) {
     return(
         <Card>
-            <Link to={`/market/${course._id}`} className="text-decoration-none">
+            <Link to={`/recipes/${recipe._id}`} className="text-decoration-none">
                     <Card>
-                        <CardImg left width="100%" src={`${imageUrl}${course.image}`} alt={course.title} height="150px" />
+                        <CardImg left width="100%" src={`${imageUrl}${recipe.image}`} alt={recipe.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
-                            <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{course.title}</CardTitle>
-                            <CardSubtitle>Price : ${course.price/100}</CardSubtitle>
+                            <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{recipe.title}</CardTitle>
+                            <CardSubtitle>Written By : {recipe.author.name}</CardSubtitle>
                         </CardBody>
                     </Card>
             </Link>
-            <Button className="w-100" onClick={() => purchaseCourse('market',course._id, history)}>Buy</Button>
         </Card>
     );
 }
 
 const RenderCourses = (props) => {
-    const courses = props.courses.map((course) => {
+    const recipes = props.recipes.map((course) => {
         return (
             <div key={course._id} className="col-12 col-md-6 col-lg-4 mb-4">
                 <RenderSingleCourse course={course} 
-                    purchaseCourse = {props.purchaseCourse}
                     history = {props.history}
                 />
             </div>
         );
     });
 
-    // if (props.courses.isLoading) {
+    // if (props.recipes.isLoading) {
     //     return(
     //         <div className="container">
     //             <div className="row">
@@ -56,16 +53,16 @@ const RenderCourses = (props) => {
     //         </div>
     //     );
     // }
-    // else if (props.courses.errMess) {
+    // else if (props.recipes.errMess) {
     //     return(
     //         <div className="container">
     //             <div className="row">
-    //                 <h4>{props.courses.errMess}</h4>
+    //                 <h4>{props.recipes.errMess}</h4>
     //             </div>
     //         </div>
     //     );
     // }
-    // else if(props.courses == null || props.courses.courses.length == 0) {
+    // else if(props.recipes == null || props.recipes.recipes.length == 0) {
     //     return (
     //     <h4>There are not any available course.</h4>
     //     );
@@ -74,7 +71,7 @@ const RenderCourses = (props) => {
         return (
             <div className="container">
                 <div className="row mt-4 mb-4">
-                    {courses}
+                    {recipes}
                 </div>
             </div>
         );
@@ -88,7 +85,7 @@ class marketCourses extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses: [],
+            recipes: [],
             loading: false,
             page: 0,
             prevY: 0,
@@ -121,7 +118,7 @@ class marketCourses extends Component {
         this.setState({infoMess: null});
         this.setState({noCourseExists: false});
         const bearer = 'Bearer ' + localStorage.getItem('token');
-        fetch(baseUrl+`market?page=${page}`,{
+        fetch(baseUrl+`recipe?page=${page}`,{
             headers: {
                 'Authorization': bearer
             },
@@ -142,10 +139,10 @@ class marketCourses extends Component {
             })
         .then(response => response.json())
         .then(course => {
-            this.setState({ courses: [...this.state.courses, ...course] });
+            this.setState({ recipes: [...this.state.recipes, ...course] });
             // alert(course.length);
             this.setState({ loading: false });
-            if(this.state.courses.length==0) {
+            if(this.state.recipes.length==0) {
                 this.setState({noCourseExists: `No Courses exist` })
             }
             else if(course.length <= 18){
@@ -155,7 +152,7 @@ class marketCourses extends Component {
                 this.setState({ page: this.state.page+1 });
             }
             console.log("fetchedcourse");
-            console.log(this.state.courses);
+            console.log(this.state.recipes);
         })
         .catch(error => {
             this.setState({errMess: error.message});
@@ -173,10 +170,6 @@ class marketCourses extends Component {
         this.setState({ prevY: y });
     }
 
-    // async componentDidMount() {
-    //     if(!this.props.courses.isLoading)
-    //     await this.props.fetchCourses('market');
-    // }
 
     render() {
         
@@ -186,19 +179,18 @@ class marketCourses extends Component {
                     <div className="row">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>Market</BreadcrumbItem>
+                            <BreadcrumbItem active>Recipes</BreadcrumbItem>
                         </Breadcrumb>
                         <div className="col-12">
-                            <h3>Courses</h3>
+                            <h3>Recipes</h3>
                             <hr />
                         </div>
                         <div className="row mt-4 mb-4">
                             {/* {alert("rendering")} */}
-                            {this.state.courses.map((course) => {
+                            {this.state.recipes.map((recipe) => {
                                     return (
-                                    <div key={course._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
-                                        <RenderSingleCourse course={course} 
-                                            purchaseCourse = {this.props.purchaseCourse}
+                                    <div key={recipe._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
+                                        <RenderSingleCourse recipe={recipe} 
                                             history = {this.props.history}
                                         />
                                     </div>)

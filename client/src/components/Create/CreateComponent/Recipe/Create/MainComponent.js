@@ -32,15 +32,17 @@ class CreateCourse extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const rawState = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()));
-        console.log(tags);
-        console.log(this.state.editorState);
         const item = new FormData();
         item.append("title", this.itemname.value);
         item.append("ingredients", this.ingredients.value);
         item.append("description", this.description.value);
         item.append("Image", this.state.selectedFile);
         item.append("steps", rawState);
-        console.log(item)
+
+        for (var pair of item.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+        
         this.props.postItem(item, this.props.history);
     }
 

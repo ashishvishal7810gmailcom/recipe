@@ -1,21 +1,21 @@
 import * as ActionTypes from './ActionTypes';
 
-export const SellItem = (state = {
+export const Recipe = (state = {
         isLoading: false,
         isPosting: false,
         errMess: null,
         isEditing: false,
-        items: []
+        recipes: []
     }, action) => {
     switch(action.type) {
         case ActionTypes.SELL_ITEM_LOADING:
-            return {...state, isLoading: true,isPosting: false , isEditing: false, errMess: null, items: []};
+            return {...state, isLoading: true,isPosting: false , isEditing: false, errMess: null, recipes: []};
         
         case ActionTypes.SELL_ITEM_FETCH_FAILED:
-            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: action.payload, items: []};
+            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: action.payload, recipes: []};
 
         case ActionTypes.ADD_SELL_ITEMS:
-            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null, items: action.payload};
+            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null, recipes: action.payload};
 
 
         case ActionTypes.SELL_ITEM_POSTING:
@@ -26,7 +26,7 @@ export const SellItem = (state = {
 
         case ActionTypes.ADD_SELL_ITEM:
             var item = action.payload;
-            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null,items: state.items.concat(item)};
+            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null,recipes: state.recipes.concat(item)};
         
             
         case ActionTypes.COURSE_EDIT_POSTING:
@@ -37,8 +37,8 @@ export const SellItem = (state = {
 
         case ActionTypes.ADD_EDITTED_COURSE:
             var item = action.payload;
-            state.items = state.items.filter((item) => (item._id.toString() != action.payload._id.toString()));
-            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null,items: state.items.concat(item)};
+            state.recipes = state.recipes.filter((item) => (item._id.toString() != action.payload._id.toString()));
+            return {...state, isLoading: false, isPosting: false, isEditing: false, errMess: null,recipes: state.recipes.concat(item)};
             
             
         default:

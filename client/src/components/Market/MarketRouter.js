@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MarketCourses from './MarketComponent/MainComponent';
-import CourseDetails from './MarketComponent/CourseDetail/CourseDetailComponent';
-import TopicTheoryRender from './MarketComponent/CourseDetail/TopicComponent';
+import ItemDetail from './MarketComponent/CourseDetail/CourseDetailComponent';
 
 
 const mapStateToProps = state => {
@@ -33,29 +32,20 @@ class MarketRouter extends Component {
               );
         }
 
-        const CourseDetailsPage = ({match}) => {
+        const RecipeDetailsPage = ({match}) => {
             return(
-              <CourseDetails
-                courseId = {match.params.courseId}
+              <ItemDetail
+                recipeId = {match.params.recipeId}
               />
               );
         }
 
-        const TopicTheoryPage = ({match}) => {
-            return(
-              <TopicTheoryRender
-                courseId = {match.params.courseId}
-                topicId = {match.params.topicId}
-              />
-              );
-        }
 
         return (
             <div>
                 <Switch>
                     <Route exact path={this.props.match.url} component={MarketCoursesPage} />
-                    <Route exact path={this.props.match.url+'/:courseId'} component={CourseDetailsPage} />
-                    <Route exact path={this.props.match.url+'/:courseId/:topicId'} component={TopicTheoryPage} />
+                    <Route exact path={this.props.match.url+'/:recipeId'} component={RecipeDetailsPage} />
                 </Switch>
           </div>
         );

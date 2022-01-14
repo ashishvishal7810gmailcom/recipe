@@ -84,7 +84,7 @@ class Header extends Component {
                         <div className="row">
                             <div className="col-2 mt-2">
                                 <NavbarBrand className="mr-auto" href="/">
-                                    <img src={`${imageUrl}images/logo.jpeg`} height="40" width="60"
+                                    <img src={`${imageUrl}images/logo.png`} height="40" width="60"
                                         alt="Onepiece" />
                                 </NavbarBrand>
                             </div>
@@ -152,18 +152,18 @@ class Header extends Component {
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/market">
-                                                    <span className="fa fa-shopping-cart fa-lg"></span> Market
+                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/recipes">
+                                                <span className="fa fa-list fa-lg"></span> Recipes
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/sell">
-                                                    <span className="fa fa-plus fa-lg"></span> Sell
+                                                <NavLink className="nav-link" onClick={this.toggleModal} to="/create">
+                                                <span className="fa fa-plus fa-lg"></span> Create
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink className="nav-link"onClick={this.toggleModal} to="/purchased">
-                                                    <span className="fa fa-shopping-basket fa-lg"></span> Purchased
+                                                <NavLink className="nav-link"onClick={this.toggleModal} to="/favourites">
+                                                <span className="fa fa-heart fa-lg"></span> Favourite
                                                 </NavLink>
                                             </NavItem>
                                         </Nav>

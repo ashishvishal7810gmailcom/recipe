@@ -5,6 +5,7 @@ const multer = require('multer');
 const cors = require('./cors');
 var User = require('../models/user');
 const Recipe = require('../models/recipe');
+const _ = require('lodash'); 
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -32,10 +33,10 @@ createRouter.route('/')
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
     User.findById(req.user._id)
     .populate('createdReciepes')
-    .then((recipe) => {
+    .then((user) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(recipe.createdReciepes);
+        res.json(user.createdReciepes);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
@@ -46,13 +47,13 @@ createRouter.route('/')
             res.end({errMess:"error while uploading"});
         }
         else {
-            var tags = req.body.category.split(",");
-            console.log(tags);
+            var ingredients = req.body.ingredients.split(",");
+            console.log(ingredients);
 
             var recipe = new Recipe({
                 author: req.user._id,
                 title: req.body.title,
-                ingredients: req.body.ingredients,
+                ingredients: ingredients,
                 description: req.body.description,
                 image: 'images/'+req.file.filename,
                 steps: req.body.steps
@@ -91,10 +92,19 @@ createRouter.route('/')
 createRouter.route('/:recipeId')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
+    // User.findById(req.user._id)
+    // .populate('createdReciepes')
+    // .then((user) => {
+    //     res.statusCode = 200;
+    //     res.setHeader('Content-Type', 'application/json');
+    //     res.json(user.createdReciepes);
+    // }, (err) => next(err))
+    // .catch((err) => next(err));
     Recipe.findById(req.params.recipeId)
     .populate('author')
     .then((recipe) => {
-        if(recipe.author._id.toString() == req.user._id.toString()) {
+        if(_.isEqual(recipe.author._id,req.user._id)) {
+            console.log(recipe);
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json(recipe);
@@ -129,10 +139,13 @@ createRouter.route('/:recipeId')
                     }
                     else {
                         if(typeof req.file != 'undefined') {
+                            var ingredients = req.body.ingredients.split(",");
+                            console.log(ingredients);
+
                             var updatedRecipe = {
                                 author: req.user._id,
                                 title: req.body.title,
-                                ingredients: req.body.ingredients,
+                                ingredients: ingredients,
                                 description: req.body.description,
                                 image: 'images/'+req.file.filename,
                                 steps: req.body.steps
@@ -149,10 +162,12 @@ createRouter.route('/:recipeId')
                             .catch((err) => next(err));
                         }
                         else {
+                            var ingredients = req.body.ingredients.split(",");
+                            console.log(ingredients);
                             var updatedRecipe = {
                                 author: req.user._id,
                                 title: req.body.title,
-                                ingredients: req.body.ingredients,
+                                ingredients: ingredients,
                                 description: req.body.description,
                                 steps: req.body.steps
                             }

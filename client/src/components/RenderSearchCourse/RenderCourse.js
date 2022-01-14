@@ -5,7 +5,6 @@ import { Loading } from '../LoadingComponent';
 import { Card, CardImg,CardBody, CardSubtitle, Button, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { imageUrl } from '../../shared/baseUrl';
-import { purchaseCourse } from '../../redux/Courses/ActionCreator';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
@@ -14,10 +13,9 @@ const mapStateToProps = state => {
     }
   }
 const mapDispatchToProps = (dispatch) => ({
-    purchaseCourse: (initialRoute, courseId, history) => dispatch(purchaseCourse(initialRoute, courseId, history))
 });
 
-function RenderSingleCourse({course, purchaseCourse, history}) {
+function RenderSingleCourse({course, history}) {
     return(
         <Card>
             <Link to={`/market/${course._id}`} className="text-decoration-none">
@@ -29,7 +27,6 @@ function RenderSingleCourse({course, purchaseCourse, history}) {
                         </CardBody>
                     </Card>
             </Link>
-            <Button className="w-100" onClick={() => purchaseCourse('market',course._id, history)}>Buy</Button>
         </Card>
     );
 }
@@ -146,7 +143,6 @@ class SearchedCourses extends Component {
                             return (
                             <div key={course._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
                                 <RenderSingleCourse course={course} 
-                                    purchaseCourse = {this.props.purchaseCourse}
                                     history = {this.props.history}
                                 />
                             </div>)

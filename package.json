@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js --exec babel-node --presets babel-preset-env",
@@ -11,7 +10,6 @@
     "localstart": "npm start & (cd client && npm start)",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -22,6 +20,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mongoose": "^6.1.5",
     "mongoose-currency": "^0.2.0",
     "morgan": "~1.9.1",
@@ -36,5 +35,4 @@
     "socket.io": "^4.4.0"
   },
   "proxy": "http://localhost:5000"
-
 }

@@ -104,8 +104,12 @@ class ItemDetail extends Component {
                             <BreadcrumbItem><Link to='/create'>Create</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{this.props.singleRecipe.recipe.title}</BreadcrumbItem>
                         </Breadcrumb>
-                        <div className="col-12">
+                        <div className="col-4">
                             <h5>{this.props.singleRecipe.recipe.title} 
+                                <Link to={`${this.props.singleRecipe.recipe._id}/edit`} className="pull-right shadow-none">
+                                    <i className="fa fa-edit fa-lg">
+                                    </i>
+                                </Link>
                             </h5>
                             <hr />
                         </div>

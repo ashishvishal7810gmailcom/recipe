@@ -5,9 +5,7 @@ import Footer from './FooterComponent';
 import Dashboard from './Dashboard/DashboardComponent';
 import CreateRouter from './Create/CreateRouter';
 import MarketRouter from './Market/MarketRouter';
-import PurchasedRouter from './Purchased/PurchasedRouter';
 import SearchedCourses from './RenderSearchCourse/RenderCourse';
-import CodeEditor from './CodeEditor';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser, loginUser, logoutUser } from '../redux/AuthSuggestions/ActionCreators';
@@ -45,7 +43,6 @@ class Main extends Component {
   render() {
     const HomePage = () => {
       return(
-        // <CodeEditor />
         <Home 
         />
       );
@@ -92,7 +89,7 @@ class Main extends Component {
       return(
         this.props.auth.isAuthenticated
         ?
-        <PurchasedRouter match={match}/>
+        null
         :
         <div>
           {this.props.history.push("/home")}

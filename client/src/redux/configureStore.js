@@ -1,12 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Auth } from './AuthSuggestions/auth';
 import { Suggestions } from './AuthSuggestions/suggestions';
-import { SellItem } from './Sell/SellItem';
-import { Topic } from './Topic/Topic';
-import { EditTopic } from './EditTopic/Topic';
-import { Courses } from './Courses/Courses';
-import { Course } from './Courses/Course';
-import { TopicTheory } from './Courses/TopicTheory';
+import { Recipe } from './Create/Create';
+import { Recipes } from './Recipe/Recipes';
+import { SingleRecipe } from './Recipe/Recipe';
 import { Searches } from './AuthSuggestions/search';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
@@ -16,12 +13,9 @@ export const ConfigureStore = () => {
         combineReducers({
             auth: Auth,
             suggestions: Suggestions,
-            sellItem: SellItem,
-            topics: Topic,
-            editTopic: EditTopic,
-            courses: Courses,
-            course: Course,
-            topicTheory: TopicTheory,
+            recipe: Recipe,
+            recipes: Recipes,
+            singleRecipe: SingleRecipe,
             searches: Searches
         }),
         applyMiddleware(thunk, logger)

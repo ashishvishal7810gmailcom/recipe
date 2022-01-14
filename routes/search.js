@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
 const Users = require('../models/user');
-const Course = require('../models/course');
+const Recipe = require('../models/recipe');
 
 const searchRouter = express.Router();
 
@@ -13,9 +13,8 @@ searchRouter.use(bodyParser.json());
 searchRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
-    console.log(req.query.searchTerm);
     var name=req.query.searchTerm;
-    Course.find({title: new RegExp(name, 'i')}).limit(18)
+    Recipe.find({title: new RegExp(name, 'i')}).limit(18)
     .populate('author')
     .then((suggestions) => {
         console.log(suggestions);

@@ -7,27 +7,27 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
-import { postItem, fetchSellItem } from '../../../redux/Sell/ActionCreator';
+import { postItem, fetchRecipes } from '../../../redux/Create/ActionCreator';
 const mapStateToProps = state => {
     return {
-        sellItem: state.sellItem
+        recipe: state.recipe
     }
   }
   
 const mapDispatchToProps = (dispatch) => ({
-    fetchSellItem: () => dispatch(fetchSellItem()),
+    fetchRecipes: () => dispatch(fetchRecipes()),
     postItem: (item, history) => dispatch(postItem(item, history)),
 });
 
 function RenderSellItem({ item }) {
     return(
         <Card>
-            <Link to={`/sell/${item._id}`} className="text-decoration-none">
+            <Link to={`/create/${item._id}`} className="text-decoration-none">
                     <Card>
                         <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
-                            <CardSubtitle>Price : ${item.price/100}</CardSubtitle>
+                            <CardSubtitle>{item.description}</CardSubtitle>
                         </CardBody>
                     </Card>
             </Link>
@@ -37,7 +37,7 @@ function RenderSellItem({ item }) {
 
 const RenderItems = (props) => {
 
-    const items = props.sellItem.items.map((item) => {
+    const recipes = props.recipe.recipes.map((item) => {
         return (
             <div key={item._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
                 <RenderSellItem item={item} />
@@ -45,7 +45,7 @@ const RenderItems = (props) => {
         );
     });
 
-    if (props.sellItem.isLoading) {
+    if (props.recipe.isLoading) {
         return(
             <div className="container">
                 <div className="row">
@@ -54,16 +54,16 @@ const RenderItems = (props) => {
             </div>
         );
     }
-    else if (props.sellItem.errMess) {
+    else if (props.recipe.errMess) {
         return(
             <div className="container">
                 <div className="row">
-                    <h4>{props.sellItem.errMess}</h4>
+                    <h4>{props.recipe.errMess}</h4>
                 </div>
             </div>
         );
     }
-    else if(props.sellItem == null || props.sellItem.items.length == 0) {
+    else if(props.recipe == null || props.recipe.recipes.length == 0) {
         return (
         <h4>You have not created any course.</h4>
         );
@@ -72,7 +72,7 @@ const RenderItems = (props) => {
         return (
             <div className="container">
                 <div className="row mt-4 mb-4">
-                    {items}
+                    {recipes}
                 </div>
             </div>
         );
@@ -84,8 +84,8 @@ class Sell extends Component {
         super(props);
     }
     componentDidMount() {
-        if(!this.props.sellItem.isLoading)
-        this.props.fetchSellItem();
+        if(!this.props.recipe.isLoading)
+        this.props.fetchRecipes();
     }
 
     render() {
@@ -96,7 +96,7 @@ class Sell extends Component {
                     <div className="row">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>Sell</BreadcrumbItem>
+                            <BreadcrumbItem active>Create Recipe</BreadcrumbItem>
                         </Breadcrumb>
                         <div className="col-6">
                             <h3>My Created Recipes</h3>
@@ -104,15 +104,16 @@ class Sell extends Component {
                         </div>
                         <div className="col-6">
                             <Link to="/create/createrecipe" className="pull-right shadow-none">
-                                <span className="fa fa-plus fa-lg"></span>  Create New Recipe
+                                <span className="fa fa-plus fa-lg"></span>  Create Recipe
                             </Link>
                         </div>
                         <div>
                             {
-                                // (this.props.sellItem.items == null || this.props.sellItem.items.length == 0)?
+                                // null
+                                // (this.props.recipe.recipes == null || this.props.recipe.recipes.length == 0)?
                                 // <h4>Selling List is Empty</h4>:
                                 <RenderItems
-                                    sellItem={this.props.sellItem}
+                                    recipe={this.props.recipe}
                                 />
                             }
                         </div>

@@ -15,14 +15,9 @@ const recipeSchema = new mongoose.Schema({//to user middleware in mongoose
     image: {
         type: String
     },
-    steps: String,
-    category: [{
-        type: String,
-        required: true
-    }]
+    steps: String
 },{
-    timestamps:true,
-    usePushEach: true
+    timestamps:true
 })
 
 var Recipe = mongoose.model('Recipe',recipeSchema)

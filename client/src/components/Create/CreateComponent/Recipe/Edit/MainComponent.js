@@ -6,30 +6,23 @@ import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { editCourse } from '../../../../../redux/Sell/ActionCreator';
-import { fetchCourse } from '../../../../../redux/Courses/ActionCreator';
+import { editRecipe } from '../../../../../redux/Create/ActionCreator';
+import { fetchRecipe } from '../../../../../redux/Recipe/ActionCreator';
 import convert from 'image-file-resize';
 
 
 const mapStateToProps = state => {
   return {
-    course : state.course
+    singleRecipe : state.singleRecipe
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchCourse: (initialRoute, courseId) => dispatch(fetchCourse(initialRoute, courseId)),
-    editCourse: (item, courseId, history) => dispatch(editCourse(item, courseId, history)),
+    fetchRecipe: (initialRoute, recipeId) => dispatch(fetchRecipe(initialRoute, recipeId)),
+    editRecipe: (item, recipeId, history) => dispatch(editRecipe(item, recipeId, history)),
 });
 
 
-
-const options = [
-    { value: 'CP', label: 'CP' },
-    { value: 'WEB DEV', label: 'WEB DEV' },
-    { value: 'ML', label: 'ML' },
-    { value: 'DL', label: 'DL' }
-];
 
 
 class EditCourse extends Component {
@@ -41,35 +34,27 @@ class EditCourse extends Component {
             selectedFile: null,
             editorState: EditorState.createEmpty(),
             itemname:'',
-            price: '',
+            ingredients: [],
+            description:''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount() {
-        await this.props.fetchCourse('sell',this.props.courseId);
-        console.log(this.props.course.course);
+        await this.props.fetchRecipe('create',this.props.recipeId);
+        console.log(this.props.singleRecipe.recipe);
 
-        if(!this.props.course.errMess) {
-            console.log(this.props.course.course.category);
-            const tags = this.props.course.course.category.map((tag) => {
-                
-                var t = {"value": tag,"label": tag}
-                return t;
-            });
-            
-            console.log(tags);
-
+        if(!this.props.singleRecipe.errMess) {
             const data = EditorState.createWithContent(
-                convertFromRaw(JSON.parse(this.props.course.course.description))
+                convertFromRaw(JSON.parse(this.props.singleRecipe.recipe.steps))
             );
 
             
             this.setState ({ 
-                itemname: this.props.course.course.title,
-                price: this.props.course.course.price/100,
-                selectedOption: tags,
+                itemname: this.props.singleRecipe.recipe.title,
+                ingredients: this.props.singleRecipe.recipe.ingredients.join(','),
+                description: this.props.singleRecipe.recipe.description,
                 editorState: data
             })
         }
@@ -78,25 +63,19 @@ class EditCourse extends Component {
 
     handleSubmit(event) {
         const rawState = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()));
-        var tags = this.state.selectedOption.map((option) => {
-            var tag = option.value;
-            return tag;
-        });
-
         const item = new FormData();
         item.append("title", this.state.itemname);
-        item.append("price", this.state.price);
-        item.append("category", tags);
-        item.append("courseImage", this.state.selectedFile);
-        item.append("description", rawState);
+        item.append("ingredients", this.state.ingredients);
+        item.append("description", this.state.description);
+        item.append("Image", this.state.selectedFile);
+        item.append("steps", rawState);
         console.log(this.state.selectedFile);
         for (var value of item.values()) {
             console.log(value); 
         }
-        this.props.editCourse(item, this.props.courseId, this.props.history);
-        this.props.history.push(`/sell/${this.props.courseId}`);
+        this.props.editRecipe(item, this.props.recipeId, this.props.history);
+        this.props.history.push(`/create/${this.props.recipeId}`);
         event.preventDefault();
-
     }
 
     handleChange = (selectedOption) => {
@@ -106,18 +85,6 @@ class EditCourse extends Component {
 
     // On file select (from the pop up)
 	onFileChange = event => {
-        // Update the state
-        // this.setState({ selectedFile: event.target.files[0] });
-        // const image = event.target.files[0];
-        // new Compressor(image, {
-        // quality: 0.8, // 0.6 can also be used, but its not recommended to go below.
-        // success: (compressedResult) => {
-        //     // compressedResult has the compressed file.
-        //     // Use the compressed file to upload the images to your server.  
-        //     this.setState({ selectedFile: compressedResult });      
-        //     // setCompressedFile(compressedResult)
-        // },
-        // });
         convert({ 
             file: event.target.files[0],  
             width: 300, 
@@ -131,7 +98,6 @@ class EditCourse extends Component {
 	};
 
     onEditorStateChange = (editorState) => {
-        // console.log(this.state.editorState.getCurrentContent().getPlainText());
         this.setState({
           editorState: editorState
         });
@@ -163,28 +129,24 @@ class EditCourse extends Component {
                     
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
-                                <Label htmlFor="itemname">Course Name</Label>
+                                <Label htmlFor="itemname">Recipe Name</Label>
                                 <Input type="text" id="itemname" name="itemname"
                                     value={this.state.itemname}
                                     onChange={this.handleInputChange}
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="price">Price</Label>
-                                <Input type="text" id="price" name="price"
-                                    value={this.state.price}
+                                <Label htmlFor="ingredients">Ingredients</Label>
+                                <Input type="text" id="ingredients" name="ingredients"
+                                    value={this.state.ingredients}
                                     onChange={this.handleInputChange}
                                 />
                             </FormGroup>
-                            <FormGroup className="mt-3 mb-4">
-                                <Label htmlFor="category">Category</Label>
-                                <Select
-                                    value={selectedOption}
-                                    onChange={this.handleChange}
-                                    options={options}
-                                    isMulti='true'
-                                    isSearchable='true'
-                                    placeholder='Select Category'
+                            <FormGroup>
+                                <Label htmlFor="description">Description</Label>
+                                <Input type="textarea" id="description" name="description"
+                                    value={this.state.description}
+                                    onChange={this.handleInputChange}
                                 />
                             </FormGroup>
                             <FormGroup className="mb-4">
@@ -200,7 +162,7 @@ class EditCourse extends Component {
                                     editorState={editorState}
                                     toolbarClassName="toolbarClassName"
                                     onEditorStateChange={this.onEditorStateChange}
-                                    placeholder="Course Description"
+                                    placeholder="Recipe Steps"
                                 />
                             </FormGroup>
                             

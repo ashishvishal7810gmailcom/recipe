@@ -15,11 +15,11 @@ export const addItems = (items) => ({
     payload: items
 });
 
-export const fetchSellItem = () => (dispatch) => {
+export const fetchRecipes = () => (dispatch) => {
     dispatch(itemLoading());
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
-    return fetch(baseUrl+'sell' ,{
+    return fetch(baseUrl+'create' ,{
         headers: {
             'Authorization': bearer
         },
@@ -57,11 +57,9 @@ export const addItem = (item) => ({
     payload: item
 });
 export const postItem = (item, history) => (dispatch) => {
-    // dispatch(itemPosting());
-
+    dispatch(itemPosting());
     const bearer = 'Bearer ' + localStorage.getItem('token');
-
-    return fetch(baseUrl+'sell', {
+    return fetch(baseUrl+'create', {
         method: 'POST',
         body: item,
         headers: {
@@ -85,7 +83,7 @@ export const postItem = (item, history) => (dispatch) => {
     .then(response => response.json())
     .then(item => {
         dispatch(addItem(item))
-        history.push(`/sell/${item._id}`)
+        history.push(`/create/${item._id}`)
     })
     .catch(error => dispatch(itemPostFailed(error.message)));
 }
@@ -107,12 +105,12 @@ export const addEdittedCourse = (course) => ({
     type: ActionTypes.ADD_EDITTED_COURSE,
     payload: course
 });
-export const editCourse = (item, courseId, history) => (dispatch) => {
+export const editRecipe = (item, recipeId, history) => (dispatch) => {
     // dispatch(courseEditPosting());
 
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
-    return fetch(baseUrl+`sell/${courseId}`, {
+    return fetch(baseUrl+`create/${recipeId}`, {
         method: 'PUT',
         body: item,
         headers: {
@@ -135,7 +133,7 @@ export const editCourse = (item, courseId, history) => (dispatch) => {
       })
     .then(response => response.json())
     .then(course => {
-        history.push(`/sell/${courseId}`);
+        history.push(`/create/${recipeId}`);
         dispatch(addEdittedCourse(course))
     })
     .catch(error => dispatch(courseEditPostFailed(error.message)));
