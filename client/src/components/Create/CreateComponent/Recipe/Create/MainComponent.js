@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Select from 'react-select';
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from 'draft-js';
@@ -10,13 +10,7 @@ import { withRouter } from 'react-router-dom';
 import convert from 'image-file-resize';
 
 
-const options = [
-    { value: 'CP', label: 'CP' },
-    { value: 'WEB DEV', label: 'WEB DEV' },
-    { value: 'ML', label: 'ML' },
-    { value: 'DL', label: 'DL' }
-  ];
-class CreateCourse extends Component {
+class CreateRecipe extends Component {
 
     constructor(props) {
         super(props);
@@ -87,26 +81,29 @@ class CreateCourse extends Component {
                                 <Label htmlFor="itemname">Recipe Name</Label>
                                 <Input type="text" id="itemname" name="itemname"
                                     innerRef={(input) => this.itemname = input} 
+                                    placeholder = 'Recipe Name'
                                     required
                                 />
                             </FormGroup>
                             
-                            <FormGroup>
+                            <FormGroup className="mt-2">
                                 <Label htmlFor="ingredients">Ingredients</Label>
-                                <Input type="text" id="ingredients" name="ingredients"
+                                <Input rows="5" type="textarea" id="ingredients" name="ingredients"
                                     innerRef={(input) => this.ingredients = input} 
+                                    placeholder = 'Write Each Ingredients in a new line'
                                     required
                                 />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup className="mt-2">
                                 <Label htmlFor="description">Description</Label>
-                                <Input type="textarea" id="description" name="description"
+                                <Input rows="5" type="textarea" id="description" name="description"
                                     innerRef={(input) => this.description = input} 
+                                    placeholder = 'Description of Dish'
                                     required
                                 />
                             </FormGroup>
                             <FormGroup className="mb-4 mt-4">
-                                <Label htmlFor="itemImage">Image</Label>
+                                <Label htmlFor="itemImage" style={{"paddingRight":"10px"}}>Image of Dish </Label>
                                 <Input type="file" id="itemImage" name="itemImage"
                                     onChange={this.onFileChange} 
                                     required
@@ -135,4 +132,4 @@ class CreateCourse extends Component {
     }
 }
 
-export default withRouter(CreateCourse);
+export default withRouter(CreateRecipe);

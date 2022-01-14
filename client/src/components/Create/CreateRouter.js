@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postItem } from '../../redux/Create/ActionCreator';
-import Sell from './CreateComponent/MainComponent';
+import Create from './CreateComponent/MainComponent';
 import ItemDetail from './CreateComponent/RecipeDetail/RecipeDetailComponent';
-import CreateCourse from './CreateComponent/Recipe/Create/MainComponent';
-import EditCourse from './CreateComponent/Recipe/Edit/MainComponent';
+import CreateRecipe from './CreateComponent/Recipe/Create/MainComponent';
+import EditRecipe from './CreateComponent/Recipe/Edit/MainComponent';
 
 const mapStateToProps = state => {
     return {
@@ -31,7 +31,7 @@ class CreateRouter extends Component {
 
         const CreatePage = () => {
             return(
-              <Sell/>
+              <Create/>
               );
         }
         const ItemWithIdPage = ({match}) => {
@@ -44,15 +44,15 @@ class CreateRouter extends Component {
 
         const CreateRecipePage = () => {
             return(
-                <CreateCourse 
+                <CreateRecipe 
                 postItem={this.props.postItem}
                 />
             );
         }
 
-        const EditCoursePage = ({match}) => {
+        const EditRecipePage = ({match}) => {
             return(
-                <EditCourse
+                <EditRecipe
                     recipeId={match.params.recipeId}
                 />
             );
@@ -68,7 +68,7 @@ class CreateRouter extends Component {
                 <Switch>
                     <Route exact path={this.props.match.url} component={CreatePage} />
                     <Route exact path={this.props.match.url+'/createrecipe'} component={CreateRecipePage} />
-                    <Route exact path={this.props.match.url+'/:recipeId/edit'} component={EditCoursePage} />
+                    <Route exact path={this.props.match.url+'/:recipeId/edit'} component={EditRecipePage} />
                    <Route path={this.props.match.url+'/:recipeId'} component={ItemWithIdPage} />
                 </Switch>
           </div>

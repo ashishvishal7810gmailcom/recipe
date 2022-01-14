@@ -138,11 +138,6 @@ class Header extends Component {
                                                     <span className="fa fa-plus fa-lg"></span> Create
                                                 </NavLink>
                                             </NavItem>
-                                            <NavItem>
-                                                <NavLink className="nav-link" to="/favourites">
-                                                    <span className="fa fa-heart fa-lg"></span> Favourite
-                                                </NavLink>
-                                            </NavItem>
                                         </Nav>
                                         :
                                         <Nav navbar>
@@ -159,11 +154,6 @@ class Header extends Component {
                                             <NavItem>
                                                 <NavLink className="nav-link" onClick={this.toggleModal} to="/create">
                                                 <span className="fa fa-plus fa-lg"></span> Create
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink className="nav-link"onClick={this.toggleModal} to="/favourites">
-                                                <span className="fa fa-heart fa-lg"></span> Favourite
                                                 </NavLink>
                                             </NavItem>
                                         </Nav>

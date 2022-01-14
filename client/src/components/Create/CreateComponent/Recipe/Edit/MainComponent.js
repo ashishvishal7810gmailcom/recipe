@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-class EditCourse extends Component {
+class EditRecipe extends Component {
 
     constructor(props) {
         super(props);
@@ -53,7 +53,7 @@ class EditCourse extends Component {
             
             this.setState ({ 
                 itemname: this.props.singleRecipe.recipe.title,
-                ingredients: this.props.singleRecipe.recipe.ingredients.join(','),
+                ingredients: this.props.singleRecipe.recipe.ingredients.join("\r\n"),
                 description: this.props.singleRecipe.recipe.description,
                 editorState: data
             })
@@ -123,7 +123,7 @@ class EditCourse extends Component {
                 <div className="container">
                     <div className="row">
                     <div className="mt-4">
-                        <h4>Edit Course</h4>
+                        <h4>Edit Recipe</h4>
                         <hr />
                     </div>
                     
@@ -133,24 +133,27 @@ class EditCourse extends Component {
                                 <Input type="text" id="itemname" name="itemname"
                                     value={this.state.itemname}
                                     onChange={this.handleInputChange}
+                                    placeholder = 'Recipe Name'
                                 />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup className="mt-2">
                                 <Label htmlFor="ingredients">Ingredients</Label>
-                                <Input type="text" id="ingredients" name="ingredients"
+                                <Input rows="5" type="textarea" id="ingredients" name="ingredients"
                                     value={this.state.ingredients}
                                     onChange={this.handleInputChange}
+                                    placeholder = 'Write Each Ingredients in a new line'
                                 />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup className="mt-2">
                                 <Label htmlFor="description">Description</Label>
-                                <Input type="textarea" id="description" name="description"
+                                <Input rows="5" type="textarea" id="description" name="description"
                                     value={this.state.description}
                                     onChange={this.handleInputChange}
+                                    placeholder = 'Description of Dish'
                                 />
                             </FormGroup>
                             <FormGroup className="mb-4">
-                                <Label for="itemImage">Image</Label>
+                                <Label for="itemImage" style={{"paddingRight":"10px"}}>Image</Label>
                                 <Input type="file" id="itemImage" name="itemImage"
                                     onChange={this.onFileChange} 
                                 />
@@ -177,5 +180,4 @@ class EditCourse extends Component {
         );
     }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditCourse));
-// export default withRouter(EditCourse);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditRecipe));

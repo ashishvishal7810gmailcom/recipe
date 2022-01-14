@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
 });
 
-function RenderSingleCourse({recipe, history}) {
+function RenderSingleRecipe({recipe, history}) {
     return(
         <Card>
             <Link to={`/recipes/${recipe._id}`} className="text-decoration-none">
@@ -30,7 +30,7 @@ function RenderSingleCourse({recipe, history}) {
     );
 }
 
-class SearchedCourses extends Component {
+class SearchedRecipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,7 +41,7 @@ class SearchedCourses extends Component {
             hasMore: true,
             errMess: null,
             infoMess: null,
-            noCourseExists: false
+            noRecipeExists: false
         };
     }
 
@@ -70,7 +70,7 @@ class SearchedCourses extends Component {
             this.setState({ loading: true });
             this.setState({errMess: null});
             this.setState({infoMess: null});
-            this.setState({noCourseExists: false});
+            this.setState({noRecipeExists: false});
             const bearer = 'Bearer ' + localStorage.getItem('token');
             fetch(baseUrl+'search?searchTerm='+this.props.searches.searchTerm+'&page='+page,{
                 headers: {
@@ -97,7 +97,7 @@ class SearchedCourses extends Component {
                 console.log(searchResult);
                 this.setState({ loading: false });
                 if(this.state.recipes.length==0) {
-                    this.setState({noCourseExists: `No Course exist with title: ${this.props.searches.searchTerm}` })
+                    this.setState({noRecipeExists: `No Recipe exist with title: ${this.props.searches.searchTerm}` })
                 }
                 else if(searchResult.length < 18){
                     this.setState({hasMore: false});
@@ -141,7 +141,7 @@ class SearchedCourses extends Component {
                     {this.state.recipes.map((recipe) => {
                             return (
                             <div key={recipe._id} className="col-10 offset-1 offset-md-0 col-md-6 col-lg-4 mb-2 mt-2">
-                                <RenderSingleCourse recipe={recipe} 
+                                <RenderSingleRecipe recipe={recipe} 
                                     history = {this.props.history}
                                 />
                             </div>)
@@ -158,8 +158,8 @@ class SearchedCourses extends Component {
                 <div className="text-center">
                     {
 
-                        (this.state.noCourseExists) ?
-                        <h4>{this.state.noCourseExists}</h4>:
+                        (this.state.noRecipeExists) ?
+                        <h4>{this.state.noRecipeExists}</h4>:
                         !this.state.hasMore ?
                         <h4>Yay!! you have visited it all</h4>:
                         this.state.errMess ?
@@ -173,6 +173,4 @@ class SearchedCourses extends Component {
         );
     }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchedCourses));
-
-// export default withRouter(SearchedCourses);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchedRecipes));

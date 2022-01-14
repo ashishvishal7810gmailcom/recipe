@@ -5,7 +5,7 @@ import Footer from './FooterComponent';
 import Dashboard from './Dashboard/DashboardComponent';
 import CreateRouter from './Create/CreateRouter';
 import MarketRouter from './Market/MarketRouter';
-import SearchedCourses from './RenderSearchCourse/RenderCourse';
+import SearchedRecipes from './RenderSearchRecipe/RenderRecipe';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser, loginUser, logoutUser } from '../redux/AuthSuggestions/ActionCreators';
@@ -85,22 +85,12 @@ class Main extends Component {
       );
     }
 
-    const FavouritesPage = ({match}) => {
-      return(
-        this.props.auth.isAuthenticated
-        ?
-        null
-        :
-        <div>
-          {this.props.history.push("/home")}
-        </div>
-      );
-    }
+
     const SearchPage = () => {
       return(
         this.props.auth.isAuthenticated
         ?
-        <SearchedCourses />
+        <SearchedRecipes />
         :
         <div>
           {this.props.history.push("/home")}
@@ -122,7 +112,6 @@ class Main extends Component {
               <Route exact path="/search" component={SearchPage} />
               <Route path="/recipes" component={RecipesPage} />
               <Route path="/create" component={ CreatePage } />
-              <Route path="/favourites" component={FavouritesPage} />
               <Route path="/:User" component={DashboardPage} />
               <Redirect to="/home" />
             </Switch>

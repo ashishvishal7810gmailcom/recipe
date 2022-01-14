@@ -139,5 +139,38 @@ export const editRecipe = (item, recipeId, history) => (dispatch) => {
     .catch(error => dispatch(courseEditPostFailed(error.message)));
 }
 
+/* ==============================================
+            DELETE COURSE
+============================================== */
+
+export const deleteRecipe = (recipeId, history) => (dispatch) => {
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl+`create/${recipeId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': bearer
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => {
+        alert("Delete SuccessFul");
+        history.push(`/create`);
+    })
+    .catch(error => alert(error.message));
+}
 
 

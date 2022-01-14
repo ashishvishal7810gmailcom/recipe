@@ -47,9 +47,9 @@ createRouter.route('/')
             res.end({errMess:"error while uploading"});
         }
         else {
-            var ingredients = req.body.ingredients.split(",");
-            ingredients = ingredients.map(v => v.toLowerCase());
-            console.log(ingredients);
+            var ingredients = req.body.ingredients.split(/\r?\n/);
+            ingredients = ingredients.map(v => v.toLowerCase().trim());
+            ingredients = ingredients.filter(v => v.length != 0);
 
             var recipe = new Recipe({
                 author: req.user._id,
@@ -140,10 +140,9 @@ createRouter.route('/:recipeId')
                     }
                     else {
                         if(typeof req.file != 'undefined') {
-                            var ingredients = req.body.ingredients.split(",");
-                            ingredients = ingredients.map(v => v.toLowerCase());
-
-                            console.log(ingredients);
+                            var ingredients = req.body.ingredients.split(/\r?\n/);
+                            ingredients = ingredients.map(v => v.toLowerCase().trim());
+                            ingredients = ingredients.filter(v => v.length != 0);
 
                             var updatedRecipe = {
                                 author: req.user._id,
@@ -165,10 +164,10 @@ createRouter.route('/:recipeId')
                             .catch((err) => next(err));
                         }
                         else {
-                            var ingredients = req.body.ingredients.split(",");
-                            ingredients = ingredients.map(v => v.toLowerCase());
+                            var ingredients = req.body.ingredients.split(/\r?\n/);
+                            ingredients = ingredients.map(v => v.toLowerCase().trim());
+                            ingredients = ingredients.filter(v => v.length != 0);
 
-                            console.log(ingredients);
                             var updatedRecipe = {
                                 author: req.user._id,
                                 title: req.body.title,

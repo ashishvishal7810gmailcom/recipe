@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardSubtitle, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { imageUrl } from '../../../../shared/baseUrl';
-import { Loading } from '../../../LoadingComponent';
+import { imageUrl } from '../../../shared/baseUrl';
+import { Loading } from '../../LoadingComponent';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
 import { connect } from 'react-redux';
-import { fetchRecipe } from '../../../../redux/Recipe/ActionCreator';
+import { fetchRecipe } from '../../../redux/Recipe/ActionCreator';
 
 const mapStateToProps = state => {
   return {
@@ -26,17 +26,17 @@ function RenderItem({item, currentContentAsHTML}) {
         return(
             <React.Fragment>
                 <div className="row mb-2">
-                    <div className="col-10 offset-1 col-md-4 offset-md-2 col-lg-4 offset-lg-2">
+                    <div className="col-10 offset-1">
                         <Card>
                             <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="200px" />
                             <CardBody className="text-center text-dark text-capitalize">
                                 <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
-                                <CardSubtitle>Written By: <i>{item.author.name}</i></CardSubtitle>
-
+                                <CardSubtitle style={{"paddingBottom":"10px"}}>Written By: <i>{item.author.name}</i></CardSubtitle>
+                                <CardSubtitle>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(item.updatedAt)))}</CardSubtitle>
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-10 offset-1 col-md-4 offset-md-1 col-lg-4 mt-2">
+                    <div className="col-10 offset-1">
                         <Card className="mb-2">
                             <CardBody className="text-dark text-capitalize">
                                 <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Dish Description</CardTitle>
@@ -54,8 +54,7 @@ function RenderItem({item, currentContentAsHTML}) {
                         </Card>
                         
                     </div>
-                </div>
-                <div className="col-12">
+                    <div className="col-10 offset-1">
                     <Card>
                         <CardBody className="text-dark">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Recipe Steps</CardTitle>
@@ -66,6 +65,8 @@ function RenderItem({item, currentContentAsHTML}) {
                         </CardBody>
                     </Card>
                 </div>
+                </div>
+                
             </React.Fragment>
             
         );
@@ -80,7 +81,7 @@ class ItemDetail extends Component {
 
     componentDidMount() {
         if(!this.props.singleRecipe.isLoading)
-        this.props.fetchRecipe('create',this.props.recipeId);
+        this.props.fetchRecipe('recipe',this.props.recipeId);
     }
 
     render() {
@@ -116,7 +117,7 @@ class ItemDetail extends Component {
                     <div className="row">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem><Link to='/create'>Create</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to='/recipes'>Recipes</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{this.props.singleRecipe.recipe.title}</BreadcrumbItem>
                         </Breadcrumb>
                         <div className="col-12">

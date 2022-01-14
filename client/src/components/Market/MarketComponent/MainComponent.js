@@ -25,7 +25,8 @@ function RenderSingleCourse({recipe, history}) {
                         <CardImg left width="100%" src={`${imageUrl}${recipe.image}`} alt={recipe.title} height="150px" />
                         <CardBody className="text-center text-dark text-capitalize">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{recipe.title}</CardTitle>
-                            <CardSubtitle>Written By : {recipe.author.name}</CardSubtitle>
+                            <CardSubtitle style={{"paddingBottom":"10px"}}>Written By : {recipe.author.name}</CardSubtitle>
+                            <CardSubtitle>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(recipe.updatedAt)))}</CardSubtitle>
                         </CardBody>
                     </Card>
             </Link>
@@ -33,7 +34,7 @@ function RenderSingleCourse({recipe, history}) {
     );
 }
 
-const RenderCourses = (props) => {
+const RenderRecipes = (props) => {
     const recipes = props.recipes.map((course) => {
         return (
             <div key={course._id} className="col-12 col-md-6 col-lg-4 mb-4">
@@ -78,7 +79,7 @@ const RenderCourses = (props) => {
 }
 
 
-class marketCourses extends Component {
+class marketRecipes extends Component {
 
 
 
@@ -97,7 +98,7 @@ class marketCourses extends Component {
     }
 
     componentDidMount() {
-        this.getCourses(this.state.page);
+        this.getRecipes(this.state.page);
 
         var options = {
             root: null,
@@ -112,7 +113,7 @@ class marketCourses extends Component {
         this.observer.observe(this.loadingRef);
     }
 
-    getCourses(page) {
+    getRecipes(page) {
         this.setState({ loading: true });
         this.setState({errMess: null});
         this.setState({infoMess: null});
@@ -143,7 +144,7 @@ class marketCourses extends Component {
             // alert(course.length);
             this.setState({ loading: false });
             if(this.state.recipes.length==0) {
-                this.setState({noCourseExists: `No Courses exist` })
+                this.setState({noCourseExists: `Sorry, Currently there is no Recipes` })
             }
             else if(course.length <= 18){
                 this.setState({hasMore: false});
@@ -165,7 +166,7 @@ class marketCourses extends Component {
     handleObserver(entities, observer) {
         const y = entities[0].boundingClientRect.y;
         if (this.state.prevY > y && this.state.hasMore && !this.state.loading) {
-            this.getCourses(this.state.page);            
+            this.getRecipes(this.state.page);            
         }
         this.setState({ prevY: y });
     }
@@ -204,7 +205,7 @@ class marketCourses extends Component {
                                 null
                             }   
                         </div>
-                        <div className="text-center">
+                        <div className="text-center mb-4">
                             {
 
                                 (this.state.noCourseExists) ?
@@ -227,4 +228,4 @@ class marketCourses extends Component {
     }
 }
 
-export default withRouter(connect(mapDispatchToProps)(marketCourses));
+export default withRouter(connect(mapDispatchToProps)(marketRecipes));

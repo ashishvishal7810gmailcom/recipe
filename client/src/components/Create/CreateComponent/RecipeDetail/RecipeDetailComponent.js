@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardSubtitle, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardSubtitle, CardImgOverlay, CardBody, CardTitle, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { imageUrl } from '../../../../shared/baseUrl';
 import { Loading } from '../../../LoadingComponent';
@@ -7,6 +7,7 @@ import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
 import { connect } from 'react-redux';
 import { fetchRecipe } from '../../../../redux/Recipe/ActionCreator';
+import { deleteRecipe } from '../../../../redux/Create/ActionCreator';
 
 const mapStateToProps = state => {
   return {
@@ -16,27 +17,34 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchRecipe: (initialRoute, recipeId) => dispatch(fetchRecipe(initialRoute, recipeId)),
+    deleteRecipe: (recipeId, history) => dispatch(deleteRecipe(recipeId, history)),
+
 });
 
 
-function RenderItem({item, currentContentAsHTML}) {
+function RenderItem({item, currentContentAsHTML, deleteRecipe, history}) {
     const ingredients = item.ingredients.map((ingredient) => {
         return <li>{ingredient}</li>
     });
         return(
             <React.Fragment>
                 <div className="row mb-2">
-                    <div className="col-10 offset-1 col-md-4 offset-md-2 col-lg-4 offset-lg-2">
+                    <div className="col-10 offset-1">
                         <Card>
                             <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="200px" />
+                            <CardImgOverlay>
+                                <Button className="btn btn-danger" color="primary" onClick={() => deleteRecipe(item._id, history)}>
+                                        <span className="fa fa-trash fa-lg"></span>
+                                </Button>
+                            </CardImgOverlay>
                             <CardBody className="text-center text-dark text-capitalize">
                                 <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
-                                <CardSubtitle>Written By: <i>{item.author.name}</i></CardSubtitle>
-
+                                <CardSubtitle style={{"paddingBottom":"10px"}}>Written By: <i>{item.author.name}</i></CardSubtitle>
+                                <CardSubtitle>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(item.updatedAt)))}</CardSubtitle>
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-10 offset-1 col-md-4 offset-md-1 col-lg-4 mt-2">
+                    <div className="col-10 offset-1">
                         <Card className="mb-2">
                             <CardBody className="text-dark text-capitalize">
                                 <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Dish Description</CardTitle>
@@ -54,8 +62,7 @@ function RenderItem({item, currentContentAsHTML}) {
                         </Card>
                         
                     </div>
-                </div>
-                <div className="col-12">
+                    <div className="col-10 offset-1">
                     <Card>
                         <CardBody className="text-dark">
                             <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Recipe Steps</CardTitle>
@@ -66,44 +73,11 @@ function RenderItem({item, currentContentAsHTML}) {
                         </CardBody>
                     </Card>
                 </div>
+                </div>
+                
             </React.Fragment>
             
         );
-        // return(
-        //     <React.Fragment>
-        //         <div className="row mb-4">
-        //             <div className="col-10 offset-1 col-md-4 offset-md-2 col-lg-4 offset-lg-2">
-        //                 <Card>
-        //                     <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="200px" />
-        //                     <CardBody className="text-center text-dark text-capitalize">
-        //                         <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
-        //                         <CardSubtitle>Written By: <i>{item.author.name}</i></CardSubtitle>
-
-        //                     </CardBody>
-        //                 </Card>
-        //             </div>
-        //             <div className="col-10 offset-1 col-md-4 offset-md-1 col-lg-4 mt-3">
-        //                     <blockquote>{item.description}</blockquote>
-        //                     {/* <CardBody className="text-center text-dark text-capitalize">
-        //                         <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.description}</CardTitle>
-        //                     </CardBody> */}
-        //             </div>
-        //         </div>
-        //         <div className="col-12">
-        //             <Card>
-        //                 <CardBody className="text-dark">
-        //                     <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>Recipe Steps</CardTitle>
-        //                     <hr />
-        //                     <CardSubtitle>
-        //                         <div dangerouslySetInnerHTML={{__html: currentContentAsHTML}}></div>
-        //                     </CardSubtitle>
-        //                 </CardBody>
-        //             </Card>
-        //         </div>
-        //     </React.Fragment>
-            
-        // );
-
 }
 
 class ItemDetail extends Component {
@@ -153,7 +127,7 @@ class ItemDetail extends Component {
                             <BreadcrumbItem><Link to='/create'>Create</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{this.props.singleRecipe.recipe.title}</BreadcrumbItem>
                         </Breadcrumb>
-                        <div className="col-4">
+                        <div className="col-5">
                             <h5>{this.props.singleRecipe.recipe.title} 
                                 <Link to={`${this.props.singleRecipe.recipe._id}/edit`} className="pull-right shadow-none">
                                     <i className="fa fa-edit fa-lg">
@@ -162,10 +136,17 @@ class ItemDetail extends Component {
                             </h5>
                             <hr />
                         </div>
+                        <div className="col-7">
+                            <Button className="btn btn-danger pull-right" color="primary" onClick={() => this.props.deleteRecipe(this.props.singleRecipe.recipe._id, this.props.history)}>
+                                    <span className="fa fa-trash fa-lg"></span> Delete Recipe
+                            </Button>
+                        </div>
                     </div>
                     
                     <div className="row mt-4 mb-4">
                         <RenderItem item={this.props.singleRecipe.recipe}
+                            deleteRecipe = {this.props.deleteRecipe}
+                            history = {this.props.history}
                             steps = {steps}
                             data = {data}
                             currentContentAsHTML = {currentContentAsHTML}

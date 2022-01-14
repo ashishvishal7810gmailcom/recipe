@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay,CardBody, CardSubtitle, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay,CardBody, CardSubtitle, CardText, CardTitle, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { imageUrl } from '../../../shared/baseUrl';
 import { Loading } from '../../LoadingComponent';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { deleteRecipe } from '../../../redux/Create/ActionCreator';
 
 import { postItem, fetchRecipes } from '../../../redux/Create/ActionCreator';
 const mapStateToProps = state => {
@@ -17,19 +17,22 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     fetchRecipes: () => dispatch(fetchRecipes()),
     postItem: (item, history) => dispatch(postItem(item, history)),
+    deleteRecipe: (recipeId, history) => dispatch(deleteRecipe(recipeId, history)),
+
 });
 
 function RenderSellItem({ item }) {
     return(
         <Card>
             <Link to={`/create/${item._id}`} className="text-decoration-none">
-                    <Card>
-                        <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="150px" />
-                        <CardBody className="text-center text-dark text-capitalize">
-                            <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
-                            <CardSubtitle>{item.description}</CardSubtitle>
-                        </CardBody>
-                    </Card>
+                <Card>
+                    <CardImg width="100%" src={`${imageUrl}${item.image}`} alt={item.title} height="150px" />
+                    <CardBody className="text-center text-dark text-capitalize">
+                    <CardTitle style={{"fontWeight":"bold", "fontSize":"22px"}}>{item.title}</CardTitle>
+                    <CardSubtitle style={{"paddingBottom":"10px"}}>Created : {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(item.updatedAt)))}</CardSubtitle>
+                    <CardSubtitle>Last Updated : {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(item.updatedAt)))}</CardSubtitle>
+                    </CardBody>
+                </Card>
             </Link>
         </Card>
     );
@@ -65,7 +68,9 @@ const RenderItems = (props) => {
     }
     else if(props.recipe == null || props.recipe.recipes.length == 0) {
         return (
-        <h4>You have not created any course.</h4>
+            <div className="mt-2 mb-4 text-center">
+                <h4>Sorry, You have not created any Recipe.</h4>
+            </div>
         );
     }
     else
@@ -79,7 +84,7 @@ const RenderItems = (props) => {
 }
 
 
-class Sell extends Component {
+class Create extends Component {
     constructor(props) {
         super(props);
     }
@@ -125,7 +130,4 @@ class Sell extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Sell));
-
-
-// export default Sell;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
