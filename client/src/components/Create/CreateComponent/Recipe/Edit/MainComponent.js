@@ -87,8 +87,8 @@ class EditRecipe extends Component {
 	onFileChange = event => {
         convert({ 
             file: event.target.files[0],  
-            width: 300, 
-            height: 200, 
+            width: 600, 
+            height: 400, 
             type: 'jpeg'
             }).then(resp => {
                 this.setState({ selectedFile: resp });
